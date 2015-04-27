@@ -10,7 +10,7 @@
       large_cover_url: '',
       category_id: 1 }])
 
-  Category.create(title: 'drama')
-  Category.create(title: 'comedy')
-  Category.create(title: 'action')
+  Category.create(name: 'drama')
+  Category.create(name: 'comedy')
+  Category.create(name: 'action')
 #   Mayor.create(name: 'Emanuel', city: cities.first)

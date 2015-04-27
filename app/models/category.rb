@@ -1,3 +1,3 @@
 class Category < ActiveRecord::Base
-  belongs_to :videos
+  has_many :videos
 end

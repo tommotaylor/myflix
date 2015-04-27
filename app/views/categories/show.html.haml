@@ -1,1 +1,17 @@
-Drama
+%section.genre
+  %header.clearfix
+    %h1 
+      = @category.name.humanize
+    .genre_sorting
+      Sort by:
+      %select(name="")
+        %option(value="a-z") Title: A - Z
+        %option(value="z-a") Title: Z - A
+        %option(value="rating") Rating
+
+  %article.row
+    - @category.videos.each do |vid|
+      .video.col-md-2
+        = image_tag("/tmp/#{vid.title}.jpg")
+
+    

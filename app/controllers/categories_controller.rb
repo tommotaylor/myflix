@@ -1,6 +1,7 @@
-class CategoriesController < ApplicationController::Base
+class CategoriesController < ApplicationController
   
   def show
+    @category = Category.first
   end
   
 
