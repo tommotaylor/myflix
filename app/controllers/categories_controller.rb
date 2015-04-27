@@ -1,3 +1,7 @@
 class CategoriesController < ApplicationController::Base
-  belongs_to :videos
+  
+  def show
+  end
+  
+
 end

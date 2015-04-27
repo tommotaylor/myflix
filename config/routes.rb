@@ -3,5 +3,6 @@ Myflix::Application.routes.draw do
 
   get 'home', to: 'video#index'
   get 'video', to: 'video#show'
+  get 'drama', to: 'category#show'
 
 end
