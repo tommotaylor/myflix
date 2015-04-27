@@ -3,13 +3,13 @@ development:
   encoding: unicode
   database: myflix_development
   pool: 5
-  username: YOUR_USERNAME
-  password: YOUR_PASSWORD
+  username: Tom
+  password:
 
 test:
   adapter: postgresql
   encoding: unicode
   database: myflix_test
   pool: 5
-  username: YOUR_USERNAME
-  password: YOUR_PASSWORD
+  username: Tom
+  password:

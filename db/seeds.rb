@@ -3,5 +3,9 @@
 #
 # Examples:
 #
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
+  videos = Video.create([
+    { title: 'Birdman', 
+      description: 'A washed-up actor, who once played an iconic superhero, battles his ego and attempts to recover his family, his career and himself in the days leading up to the opening of his Broadway play.',
+      small_cover_url: 'public/tmp/birdman.jpg',
+      large_cover_url: '' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
