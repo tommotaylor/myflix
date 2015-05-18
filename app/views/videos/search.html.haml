@@ -1,0 +1,8 @@
+%article.video_category
+  %header
+    %h3= link_to "All Movies"
+  .videos.row
+    - @results.each do |video|
+      .video.col-sm-2
+        = image_tag("/tmp/#{video.title}.jpg")
+
