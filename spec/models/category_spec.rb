@@ -13,11 +13,11 @@ describe "#recent_videos" do
     expect(documentary.recent_videos).to include(supermensch)
   end
 
-  it "should return all videos if less than 6 exist" do
+  it "should return all videos if less than 6 exist, in descending order" do
     documentary = Category.create(name: "documentary")
     black_fish = Video.create(title: "black fish", description: "awesome", category: documentary, created_at: 1.day.ago)
     supermensch = Video.create(title: "supermensch", description: "really awesome", category: documentary)
-    expect(documentary.recent_videos).to eq([black_fish, supermensch])
+    expect(documentary.recent_videos).to eq([supermensch, black_fish])
   end
 
   it "should return 6 videos in descending order if more than 6 exist" do
