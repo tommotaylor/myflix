@@ -4,6 +4,7 @@ Myflix::Application.routes.draw do
   get 'home', to: 'videos#index'
   get 'video', to: 'videos#show'
   get 'drama', to: 'categories#show'
+  get 'front', to: 'static#front'
 
   resources :videos, only: :show do
     collection do
