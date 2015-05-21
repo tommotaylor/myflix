@@ -13,10 +13,13 @@
     %ul
       %li.dropdown
         %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
-          Welcome, Philip J. Fry
-          %b.caret
-        %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
-          %li
-            %a(href="#") Account
-            %a(href="#") Plan and Billing
-            %a(href="#") Sign Out
+          - if signed_in?
+            Welcome, #{current_user.name}
+            %b.caret
+            %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
+              %li
+                =link_to 'Account', '#'
+                =link_to 'Plan and Billing', '#'
+                =link_to 'Sign Out', sign_out_path
+          - else
+            = link_to "SIGN IN", sign_in_path
