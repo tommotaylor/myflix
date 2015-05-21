@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    
+    redirect_to home_path unless !signed_in?
   end
 
   def create

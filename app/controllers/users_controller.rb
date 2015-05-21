@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   
   def new
+    redirect_to home_path unless !signed_in?
     @user = User.new
   end
 
