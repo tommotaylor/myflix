@@ -1,23 +1,22 @@
 %section.register.container
   .row
     .col-sm-10.col-sm-offset-1
-      %form.form-horizontal
-        %header
-          %h1 Register
-        %fieldset
-          = form_for @user, html: {role: "form"} do |f|
-            .form-group
-              = f.label :email, "Email Address", {class: "control-label col-sm-2"}
-              .col-sm-6
-                = f.text_field :email, {class: "form-control"}
-            .form-group
-              = f.label :password, {class: "control-label col-sm-2"}
-              .col-sm-6
-                = f.password_field :password, {class: "form-control"}
-            .form-group
-              = f.label :name, "Full Name", {class: "control-label col-sm-2"}
-              .col-sm-6
-                = f.text_field :name, {class: "form-control"}
-            .control-group.col-sm-offset-2.controls 
-              = f.submit "Sign Up", {class: "btn btn-default"}
+      %fieldset
+        = form_for @user, html: {role: "form", class: "form-horizontal"} do |f|
+          %header
+            %h1 Register
+          .form-group
+            = f.label :email, "Email Address", {class: "control-label col-sm-2"}
+            .col-sm-6
+              = f.text_field :email, {class: "form-control"}
+          .form-group
+            = f.label :password, {class: "control-label col-sm-2"}
+            .col-sm-6
+              = f.password_field :password, {class: "form-control"}
+          .form-group
+            = f.label :name, "Full Name", {class: "control-label col-sm-2"}
+            .col-sm-6
+              = f.text_field :name, {class: "form-control"}
+          .control-group.col-sm-offset-2.controls 
+            = f.submit "Sign Up", {class: "btn btn-default"}
             
