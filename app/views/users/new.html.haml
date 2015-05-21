@@ -5,18 +5,20 @@
         %header
           %h1 Register
         %fieldset
-          .form-group
-            %label.control-label.col-sm-2 Email Address
-            .col-sm-6
-              %input.form-control(type="email")
-          .form-group
-            %label.control-label.col-sm-2 Password
-            .col-sm-6
-              %input.form-control(type="password")
-          .form-group
-            %label.control-label.col-sm-2 Full Name
-            .col-sm-6
-              %input.form-control(type="text")
-        %fieldset.actions.control-group.col-sm-offset-2
-          .controls
-            %input(type="submit" value="Sign Up" class="btn btn-default")
+          = form_for :user, html: {role: "form"} do |f|
+            .form-group
+              = f.label :email, "Email Address", {class: "control-label col-sm-2"}
+              .col-sm-6
+                = f.text_field :email, {class: "form-control"}
+            .form-group
+              = f.label :password, {class: "control-label col-sm-2"}
+              .col-sm-6
+                = f.password_field :password, {class: "form-control"}
+            .form-group
+              = f.label :name, "Full Name", {class: "control-label col-sm-2"}
+              .col-sm-6
+                = f.text_field :name, {class: "form-control"}
+            .actions.control-group.col-sm-offset-2.controls 
+              = f.submit "Sign Up", {class: "btn btn-default"}
+              
+            
