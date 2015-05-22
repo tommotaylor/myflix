@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  
   def new
     redirect_to home_path unless !signed_in?
   end
@@ -20,4 +21,5 @@ class SessionsController < ApplicationController
     flash[:notice] = "You've logged out."
     redirect_to front_path
   end
+  
 end

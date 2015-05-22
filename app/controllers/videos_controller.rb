@@ -1,6 +1,6 @@
 class VideosController < ApplicationController
 
-before_action :require_user
+  before_action :require_user
 
   def index
   	@videos = Video.all
