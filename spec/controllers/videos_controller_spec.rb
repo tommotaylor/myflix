@@ -21,7 +21,20 @@ describe VideosController do
   end
 
   describe "GET search" do
-    it "assigns @results"
-    it "renders the search template"
+    context "with authenticated user" do
+      before do
+        session[:user_id] = Fabricate(:user)
+      end
+      it "assigns @results" do
+        video = Fabricate(:video)
+        get :search, search_term: "#{video.title}"
+        expect(assigns(:results)).to include(video)
+      end
+      it "renders the search template" do
+        video = Fabricate(:video)
+        get :search, search_term: "#{video.title}"
+        expect(response).to render_template(:search)
+      end
+    end
   end
 end
