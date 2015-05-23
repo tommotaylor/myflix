@@ -13,14 +13,30 @@ describe UsersController do
     end
   end
   describe "POST create" do
-    it "creates a new user and redirects to home if validations met" do
-      post :create, user: Fabricate(:user)
-      expect(assigns(:user)).to be_new_record(User)
-      expect(response).to redirect_to(home_path)
+    context "if validations met" do
+      before do 
+        post :create, user: Fabricate.attributes_for(:user)
+      end
+      it "creates a new user" do
+        expect(User.count).to eq(1)
+      end
+      it "redirects to home path" do
+        expect(response).to redirect_to(home_path)
+      end
     end
-    it "doesn't create user and renders new if validations not met" do
-      post :create, user: Fabricate(:user, name: "")
-      expect(response).to redirect_to(new_user_path)
+    context "if validations not met" do
+      before do 
+        post :create, user: Fabricate.attributes_for(:user, email: "")
+      end
+      it "doesn't create a new user" do
+        expect(User.count).to eq(0)
+      end
+      it "renders :new" do
+        expect(response).to render_template(:new)
+      end
+      it "sets @user" do
+        expect(assigns(:user)).to be_instance_of(User)
+      end
     end
   end
 end

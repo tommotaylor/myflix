@@ -13,14 +13,44 @@ describe SessionsController do
     end
   end
   describe "POST create" do
-    it "creates a new session and redirects to home if credentials correct"
-    it "doesn't create a new session and renders the sign in page if credentials incorrect"
+    context "correct credentials" do
+      it "creates a new session" do
+        user = Fabricate(:user)
+        post :create, email: user.email, password: user.password
+        expect(session[:user_id]).to eq(user.id)
+      end
+      it "redirects to home" do
+        user = Fabricate(:user)
+        post :create, email: user.email, password: user.password
+        expect(response).to redirect_to(home_path)
+      end
+    end
+    context "incorrect credentials" do
+      before do
+        user = Fabricate(:user)
+        post :create, email: user.email + "x", password: user.password
+      end
+      it "doesn't create a new session" do
+        expect(session[:user_id]).to be_nil
+      end
+      it "redirect to the sign in page" do
+        expect(response).to redirect_to(sign_in_path)
+      end
+    end
   end
   describe "GET destroy" do
-    it "deletes session and redirects to front" do
+    before do
       session[:user_id] = Fabricate(:user).id
-      get :destroy
-      expect(session[:user_id]).to be(nil)
+       get :destroy
+    end
+    it "deletes session" do
+      expect(session[:user_id]).to be_nil
+    end
+    it "redirects to front page" do
+      expect(response).to redirect_to(front_path)
+    end
+    it "flashes signed out notice" do
+      expect(flash[:notice]).not_to be_blank
     end
   end
 end
