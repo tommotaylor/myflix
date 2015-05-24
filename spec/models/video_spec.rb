@@ -12,35 +12,46 @@ describe Video do
       result = Video.search_by_title("")
       expect(result).to eq([])
     end
-
     it "returns an array with one title when there is an exact match" do
       Video.create(title: "black fish", description: "awesome")
       result = Video.search_by_title("black fish")
       expect(result.length).to eq(1)
     end
-
     it "returns an array with more than one title when there is more than one match" do
       Video.create(title: "black fish", description: "awesome")
       Video.create(title: "black fish", description: "really awesome")
       result = Video.search_by_title("black fish")
       expect(result.length).to eq(2)
     end
-
     it "returns an array with two titles when there are two non-exact matches, ordered by newest first" do
       black_fish = Video.create(title: "black fish", description: "awesome", created_at: 1.day.ago)
       blackadder = Video.create(title: "blackadder", description: "really awesome")
       result = Video.search_by_title("black")
       expect(result).to eq([blackadder, black_fish])
     end
-
     it "returns an empty array when there is an empty search string" do
       Video.create(title: "black fish", description: "awesome")
       Video.create(title: "black fish", description: "really awesome")
       result = Video.search_by_title("")
       expect(result).to eq([])
     end
-
   end
-  
 
+  describe "average_rating" do
+    it "returns an integer equal to the rating of the only review, when only one review" do
+      video = Video.create(title: "black fish", description: "awesome")
+      review = Review.create(rating: 5, body: "great film", video: video)
+      result = video.average_rating
+      expect(result).to eq(review.rating)
+    end
+    it "returns an integer that is the average of all ratings if more than one review exists" do
+      video = Video.create(title: "black fish", description: "awesome")
+      review = Review.create(rating: 5, body: "great film", video: video)
+      review2 = Review.create(rating: 1, body: "bad film", video: video)
+      result = video.average_rating
+      expect(result).to eq((review.rating + review2.rating)/2)
+    end
+    it "only returns an average to one decimal point"
+    it "returns an explanation when there are no reviews"
+  end
 end
