@@ -39,20 +39,20 @@ describe Video do
 
   describe "average_rating" do
     it "returns an integer equal to the rating of the only review, when only one review" do
-      video = Video.create(title: "black fish", description: "awesome")
-      review = Review.create(rating: 5, body: "great film", video: video)
+      video = Fabricate(:video)
+      review = Fabricate(:review, video: video)
       result = video.average_rating
       expect(result).to eq(review.rating)
     end
     it "returns an integer that is the average of all ratings if more than one review exists" do
-      video = Video.create(title: "black fish", description: "awesome")
-      review = Review.create(rating: 5, body: "great film", video: video)
-      review2 = Review.create(rating: 1, body: "bad film", video: video)
+      video = Fabricate(:video)
+      review = Fabricate(:review, video: video)
+      review2 = Fabricate(:review, video: video)
       result = video.average_rating
       expect(result).to eq((review.rating + review2.rating)/2)
     end
     it "returns an explanation when there are no reviews" do
-      video = Video.create(title: "black fish", description: "awesome")
+      video = Fabricate(:video)
       result = video.average_rating
       expect(result).to eq("No reviews")
     end
