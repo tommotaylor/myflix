@@ -10,9 +10,13 @@ class Video < ActiveRecord::Base
   end
 
   def average_rating
-    ratings = self.reviews.map {|h| h[:rating].to_i}
-    sum = ratings.sum
-    mean = sum/ratings.count
+    if self.reviews.any?
+      ratings = self.reviews.map(&:rating)
+      sum = ratings.sum
+      mean = sum/ratings.count.round(1)
+    else
+      return "No reviews"
+    end
   end
 
 end

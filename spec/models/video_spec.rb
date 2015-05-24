@@ -51,7 +51,10 @@ describe Video do
       result = video.average_rating
       expect(result).to eq((review.rating + review2.rating)/2)
     end
-    it "only returns an average to one decimal point"
-    it "returns an explanation when there are no reviews"
+    it "returns an explanation when there are no reviews" do
+      video = Video.create(title: "black fish", description: "awesome")
+      result = video.average_rating
+      expect(result).to eq("No reviews")
+    end
   end
 end
