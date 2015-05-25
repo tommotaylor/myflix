@@ -13,10 +13,12 @@ class Video < ActiveRecord::Base
     if self.reviews.any?
       ratings = self.reviews.map(&:rating)
       sum = ratings.sum
-      mean = sum/ratings.count.round(1)
+      mean = sum/ratings.count.to_f
+      mean.round(1)
     else
       return "No reviews"
     end
   end
 
 end
+
