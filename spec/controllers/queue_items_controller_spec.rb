@@ -18,5 +18,28 @@ describe QueueItemsController do
       expect(assigns(:queue_items)).to eq([queue_items])
     end
   end
-  
+
+  describe "POST create" do
+    context "signed in" do 
+      before do
+        session[:user_id] = Fabricate(:user).id
+      end
+      context "with valid inputs" do
+        it "creates a queue item" do
+          post :create, queue_item: Fabricate.attributes_for(:queue_item)
+          expect(Review.count).to eq(1)
+        end
+        it "creates a queue item with the current_user"
+        it "creates a queue item with the current video"
+        it "redirects to my_queue"
+      end
+      context "with invalid inputs" do
+        it "does not create a queue item"
+        it "it renders the video#show page"
+      end
+    end
+    context "not signed in" do
+      it "redirects to the sign in page"
+    end
+  end
 end
