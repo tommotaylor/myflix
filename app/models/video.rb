@@ -16,7 +16,7 @@ class Video < ActiveRecord::Base
       mean = sum/ratings.count.to_f
       mean.round(1)
     else
-      return "No reviews"
+      "No reviews"
     end
   end
 
