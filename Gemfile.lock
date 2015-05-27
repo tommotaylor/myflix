@@ -186,3 +186,6 @@ DEPENDENCIES
   shoulda-matchers
   thin
   uglifier
+
+BUNDLED WITH
+   1.10.0.rc
