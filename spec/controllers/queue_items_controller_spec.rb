@@ -26,10 +26,15 @@ describe QueueItemsController do
       end
       context "with valid inputs" do
         it "creates a queue item" do
-          post :create, queue_item: Fabricate.attributes_for(:queue_item)
-          expect(Review.count).to eq(1)
+          video = Fabricate(:video)
+          post :create, video_id: video.id
+          expect(QueueItem.count).to eq(1)
         end
-        it "creates a queue item with the current_user"
+        it "creates a queue item with the current_user" do
+          video = Fabricate(:video)
+          post :create, video_id: video.id, user_id: session[:user_id]
+          expect(QueueItem.first.user_id).to eq(session[:user_id])
+        end
         it "creates a queue item with the current video"
         it "redirects to my_queue"
       end
