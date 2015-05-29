@@ -12,8 +12,7 @@ describe QueueItemsController do
     end
     it "sets the @queue_items variable" do
       video = Fabricate(:video)
-      user = Fabricate(:user)
-      queue_items = Fabricate(:queue_item, video_id: video, user_id: user)
+      queue_items = Fabricate(:queue_item, video_id: video.id, user_id: session[:user_id])
       get :index
       expect(assigns(:queue_items)).to eq([queue_items])
     end
@@ -35,8 +34,30 @@ describe QueueItemsController do
           post :create, video_id: video.id, user_id: session[:user_id]
           expect(QueueItem.first.user_id).to eq(session[:user_id])
         end
-        it "creates a queue item with the current video"
-        it "redirects to my_queue"
+        it "creates a queue item with the current video" do
+          video = Fabricate(:video)
+          post :create, video_id: video, user_id: session[:user_id]
+          expect(QueueItem.first.video).to eq(video)
+        end
+        it "redirects to my_queue" do
+          video = Fabricate(:video)
+          post :create, video_id: video, user_id: session[:user_id]
+          expect(response).to redirect_to(my_queue_path)
+        end
+        it "adds the new queue item as the last in the queue" do
+          video = Fabricate(:video)
+          first_queue_item = Fabricate(:queue_item, video_id: video.id, user_id: session[:user_id])
+          mad_max = Fabricate(:video)
+          post :create, video_id: mad_max, user_id: session[:user_id]
+          mad_max_queue_item = QueueItem.where(video_id: mad_max.id)
+          expect(QueueItem.last.video).to eq(mad_max)
+        end
+        it "does not add the video to the queue if it is already in the queue" do
+          video = Fabricate(:video)
+          first_queue_item = Fabricate(:queue_item, video_id: video.id, user_id: session[:user_id])
+          post :create, video_id: video, user_id: session[:user_id]
+          expect(QueueItem.count).to eq(1)
+        end
       end
       context "with invalid inputs" do
         it "does not create a queue item"

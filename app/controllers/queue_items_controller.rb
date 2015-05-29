@@ -3,8 +3,9 @@ class QueueItemsController < ApplicationController
 before_action :require_user
 
   def create
-    queue_item = QueueItem.create(user_id: session[:user_id])
-    redirect_to home_path
+    video = Video.find(params[:video_id])
+    queue_item = QueueItem.create(user_id: current_user.id, video_id: video.id)
+    redirect_to my_queue_path
   end
 
   def index
