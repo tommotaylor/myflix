@@ -59,13 +59,13 @@ describe QueueItemsController do
           expect(QueueItem.count).to eq(1)
         end
       end
-      context "with invalid inputs" do
-        it "does not create a queue item"
-        it "it renders the video#show page"
-      end
     end
     context "not signed in" do
-      it "redirects to the sign in page"
+      it "redirects to the sign in page" do
+        video = Fabricate(:video)
+        post :create, video_id: video, user_id: session[:user_id]
+        expect(response).to redirect_to(sign_in_path)
+      end
     end
   end
 end
