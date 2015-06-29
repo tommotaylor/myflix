@@ -9,7 +9,7 @@ before_action :require_user
       redirect_to 'my_queue'
     else
       flash[:error] = "Sorry that didn't save"
-      render 'queue_items/index'
+      render :index
     end
   end
 
