@@ -47,12 +47,11 @@ describe QueueItemsController do
         expect(response).to redirect_to my_queue_path
       end
       it "adds the new queue item as the last in the queue" do
-        video = Fabricate(:video)
-        first_queue_item = Fabricate(:queue_item, video_id: video.id, user_id: session[:user_id])
-        mad_max = Fabricate(:video)
-        post :create, video_id: mad_max, user_id: session[:user_id]
-        mad_max_queue_item = QueueItem.where(video_id: mad_max.id)
-        expect(QueueItem.last.video).to eq(mad_max)
+        video_one = Fabricate(:video, title: "Video One")
+        video_two = Fabricate(:video, title: "Video Two")
+        first_queue_item = Fabricate(:queue_item, video_id: video_one.id, user_id: session[:user_id], list_order: 1)
+        post :create, video_id: video_two.id, user_id: session[:user_id]
+        expect(QueueItem.second.list_order).to eq(2)
       end
       it "does not add the video to the queue if it is already in the queue" do
         video = Fabricate(:video)
