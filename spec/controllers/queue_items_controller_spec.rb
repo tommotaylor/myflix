@@ -68,4 +68,22 @@ describe QueueItemsController do
       end
     end
   end
+
+  describe "POST delete" do
+    before do
+      session[:user_id] = Fabricate(:user).id
+    end
+    it "redirects to my_queue" do
+      video = Fabricate(:video)
+      queue_item = Fabricate(:queue_item, video_id: video.id, user_id: session[:user_id])
+      delete :destroy, id: queue_item.id
+      expect(response).to redirect_to my_queue_path
+    end
+    it "deletes the queue item" do
+      video = Fabricate(:video)
+      queue_item = Fabricate(:queue_item, video_id: video.id, user_id: session[:user_id])
+      delete :destroy, id: queue_item.id
+      expect(QueueItem.count).to eq(0)
+    end
+  end
 end

@@ -12,6 +12,14 @@ before_action :require_user
     @queue_items = current_user.queue_items
   end
 
+  def destroy
+    queue_item = QueueItem.find(params[:id])
+    queue_item.delete
+    redirect_to my_queue_path
+  end
+
+private
+
   def bottom_of_list
     current_user.queue_items.count + 1
   end
