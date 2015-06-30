@@ -14,7 +14,7 @@ before_action :require_user
 
   def destroy
     queue_item = QueueItem.find(params[:id])
-    queue_item.delete
+    queue_item.delete if current_user.queue_items.include?(queue_item)
     redirect_to my_queue_path
   end
 
