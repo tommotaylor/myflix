@@ -1,5 +1,6 @@
 class Video < ActiveRecord::Base
   belongs_to :category
+  has_many :reviews, -> { order(created_at: :desc) }
 
   validates_presence_of :title, :description
 
@@ -8,4 +9,13 @@ class Video < ActiveRecord::Base
     Video.where("title LIKE ?", "%#{search_term}%").order(created_at: :desc)
   end
 
+  def average_rating
+    if self.reviews.any?
+      Review.average(:rating).round(1)
+    else
+      "No reviews"
+    end
+  end
+
 end
+
