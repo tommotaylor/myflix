@@ -5,11 +5,11 @@
 #
 
 
-Category.create([ {name: 'drama'}, 
+Category.create!([ {name: 'drama'}, 
                   {name: 'comedy'}, 
                   {name: 'action'}])
 
-User.create([
+User.create!([
   { name: "Tom Taylor",
     email: "tom@tom.com",
     password: "password"
@@ -22,7 +22,7 @@ User.create([
     email: "bob@bob.com",
     password: "password" }])
 
-Video.create([
+Video.create!([
   { title: 'Birdman', 
     description: 'A washed-up actor, who once played an iconic superhero, battles his ego and attempts to recover his family, his career and himself in the days leading up to the opening of his Broadway play.',
     small_cover_url: 'tmp/birdman.jpg',
@@ -35,14 +35,14 @@ Video.create([
     large_cover_url: '',
     category_id: 2 }])
 
-QueueItem.create([
+QueueItem.create!([
   { video_id: 1,
     user_id: 1,
     },
   { video_id: 2,
     user_id: 1 }])
 
-Review.create([
+Review.create!([
   { rating: 3,
     body: "alright",
     video_id: 1,

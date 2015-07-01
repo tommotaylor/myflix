@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe QueueItem do
-  it { should belong_to (:video)}
-  it { should belong_to (:user)}
+  it { should belong_to (:video) }
+  it { should belong_to (:user) }
 
   describe "#category_name" do
     it "returns category name of queue item" do
