@@ -19,6 +19,8 @@ before_action :require_user
   end
 
   def update_list_order
+    binding.pry
+    redirect_to my_queue_path
   end
 
 private

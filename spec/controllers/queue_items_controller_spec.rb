@@ -101,4 +101,16 @@ describe QueueItemsController do
       expect(response).to redirect_to sign_in_path
     end
   end
+
+  describe "PATCH update_list_order" do
+    before do
+      session[:user_id] = Fabricate(:user).id
+    end
+    it "redirects to my_queue" do
+      patch :update_list_order
+      expect(response).to redirect_to my_queue_path
+    end
+    it "updates the list_order of the queue item"
+
+  end
 end
