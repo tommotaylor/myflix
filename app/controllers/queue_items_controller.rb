@@ -9,13 +9,16 @@ before_action :require_user
   end
 
   def index
-    @queue_items = current_user.queue_items
+    @queue_items = current_user.queue_items(:order => "list_order")
   end
 
   def destroy
     queue_item = QueueItem.find(params[:id])
     queue_item.delete if current_user.queue_items.include?(queue_item)
     redirect_to my_queue_path
+  end
+
+  def update_list_order
   end
 
 private
