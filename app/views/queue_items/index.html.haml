@@ -4,31 +4,31 @@
       %article
         %header
           %h2 My Queue
-        %table.table
-          %thead
-            %tr
-              %th(width="10%") List Order
-              %th(width="30%") Video Title
-              %th(width="10%") Play
-              %th(width="20%") Rating
-              %th(width="15%") Genre
-              %th(width="15%") Remove
-          %tbody
-            - @queue_items.each do |queue_item|
+        = form_tag '/update_list_order', method: :patch do
+          %table.table
+            %thead
               %tr
-                %td
-                  = form_for queue_item, :html => { class: "form-control" } do |f|
-                    = f.text_field :list_order
-                %td
-                  = link_to queue_item.video_title, queue_item.video
-                %td
-                  = button_to "Play", nil, class: "btn btn-default"
-                %td
-                  = queue_item.rating
-                %td
-                  = link_to queue_item.category_name.humanize, queue_item.category
-                %td
-                  = link_to queue_item_path(queue_item), method: :delete do
-                    %i.glyphicon.glyphicon-remove
+                %th(width="10%") List Order
+                %th(width="30%") Video Title
+                %th(width="10%") Play
+                %th(width="20%") Rating
+                %th(width="15%") Genre
+                %th(width="15%") Remove
+            %tbody
+              - @queue_items.each do |queue_item|
+                %tr
+                  %td
+                    = text_field_tag "queue_items[][list_order]", queue_item.list_order, class: "form-control", data: { video_id: queue_item.video.id }
+                  %td
+                    = link_to queue_item.video_title, queue_item.video
+                  %td
+                    = button_to "Play", nil, class: "btn btn-default"
+                  %td
+                    = queue_item.rating
+                  %td
+                    = link_to queue_item.category_name.humanize, queue_item.category
+                  %td
+                    = link_to queue_item_path(queue_item), method: :delete do
+                      %i.glyphicon.glyphicon-remove
 
-        = link_to "Update Instant Queue", update_list_order_path, method: :patch, class: "btn btn-default"
+        = submit_tag "Update Instant Queue", class: "btn btn-default"
