@@ -110,7 +110,10 @@ describe QueueItemsController do
       patch :update_list_order
       expect(response).to redirect_to my_queue_path
     end
-    it "updates the list_order of the queue item"
+    it "saves the new list_order of each queue item" do
+      
+    end
+
 
   end
 end
