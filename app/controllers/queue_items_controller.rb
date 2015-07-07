@@ -9,7 +9,7 @@ before_action :require_user
   end
 
   def index
-    @queue_items = current_user.queue_items(:order => "list_order")
+    @queue_items = current_user.queue_items
   end
 
   def destroy
@@ -20,6 +20,10 @@ before_action :require_user
 
   def update_list_order
     incoming_data = params[:queue_items]
+    incoming_data.each do  |data|
+      queue_item = QueueItem.find(data["id"])
+      queue_item.update_attributes(list_order: data["list_order"])
+    end
     redirect_to my_queue_path
   end
 

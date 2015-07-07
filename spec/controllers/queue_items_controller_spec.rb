@@ -1,4 +1,6 @@
 require 'rails_helper'
+require 'pry'
+require 'pry-nav'
 
 describe QueueItemsController do
 
@@ -102,18 +104,26 @@ describe QueueItemsController do
     end
   end
 
-  describe "PATCH update_list_order" do
-    before do
-      session[:user_id] = Fabricate(:user).id
-    end
-    it "redirects to my_queue" do
-      patch :update_list_order
-      expect(response).to redirect_to my_queue_path
-    end
-    it "saves the new list_order of each queue item" do
-      
-    end
-
-
+  describe "POST update_list_order" do
+    context "with valid inputs"
+      before do
+        session[:user_id] = Fabricate(:user).id
+      end
+      it "redirects to my_queue" do
+        queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
+        queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
+        post :update_list_order, queue_items: [{id: queue_item_one.id, "list_order"=>"2"}, {id: queue_item_two.id, "list_order"=>"1"}]
+        expect(response).to redirect_to my_queue_path
+      end
+      it "saves the queue items' new list_order" do
+        queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
+        queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
+        post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 2}, {id: queue_item_two.id, list_order: 1}]
+        expect(queue_item_one.reload.list_order).to eq(2)
+      end
+      it "normalises the list_order"
+    context "with invalid inputs"
+    context "with unauthenticated users"
+    context "with queue items that are not in the users queue"
   end
 end
