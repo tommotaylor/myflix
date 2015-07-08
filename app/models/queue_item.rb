@@ -2,6 +2,8 @@ class QueueItem < ActiveRecord::Base
   belongs_to :user
   belongs_to :video
 
+  validates_numericality_of :list_order, { only_integer: true }
+
   delegate :category, to: :video
   delegate :title, to: :video, prefix: :video
 

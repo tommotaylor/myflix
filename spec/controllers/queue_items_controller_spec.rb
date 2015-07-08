@@ -102,6 +102,13 @@ describe QueueItemsController do
       delete :destroy, id: queue_item.id
       expect(response).to redirect_to sign_in_path
     end
+    it "normalises the queue after delete" do
+      queue_item1 = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
+      queue_item2 = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
+      queue_item3 = Fabricate(:queue_item, user_id: session[:user_id], list_order: 3)
+      delete :destroy, id: queue_item2.id
+      expect(queue_item3.reload.list_order).to eq(2)
+    end
   end
 
   describe "POST update_list_order" do
@@ -127,25 +134,28 @@ describe QueueItemsController do
         post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 5}, {id: queue_item_two.id, list_order: 4}]
         expect(queue_item_one.reload.list_order).to eq(2)
       end
-      it "puts the updated queue item at the top of the queue when there are only two queue items and the form is submitted with both list orders as 1" do
-        queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
-        queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
-        post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 1}, {id: queue_item_two.id, list_order: 1}]
-        expect(queue_item_two.reload.list_order).to eq(1)
-      end
     end
     context "with invalid inputs" do
+      before do
+        session[:user_id] = Fabricate(:user).id
+      end
       it "doesn't update the list order if the data is a string" do
         queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
         queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
         post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 3}, {id: queue_item_two.id, list_order: "foobar"}]
-        expect(queue_item_two.reload.list_order).to eq(2)
+        expect(queue_item_one.reload.list_order).to eq(1)
       end
       it "doesn't update the list order if the data is a float" do
         queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
         queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
-        post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 3}, {id: queue_item_two.id, list_order: 1.25}]
-        expect(queue_item_two.reload.list_order).to eq(2)
+        post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 3.5}, {id: queue_item_two.id, list_order: 2}]
+        expect(queue_item_one.reload.list_order).to eq(1)
+      end
+      it "flashes an error" do
+        queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
+        queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
+        post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 3.5}, {id: queue_item_two.id, list_order: 2}]
+        expect(flash[:error]).to be_present
       end
     end
     context "with unauthenticated users" do
