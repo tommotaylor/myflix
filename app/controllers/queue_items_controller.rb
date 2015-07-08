@@ -22,7 +22,10 @@ before_action :require_user
     incoming_data = params[:queue_items]
     incoming_data.each do  |data|
       queue_item = QueueItem.find(data["id"])
-      queue_item.update_attributes(list_order: data["list_order"])
+      queue_item.update_attributes(list_order: data["list_order"]) if current_user.queue_items.include?(queue_item)
+    end
+    current_user.queue_items.each_with_index do  |queue_item, index|
+      queue_item.update_attributes(list_order: index +1)
     end
     redirect_to my_queue_path
   end

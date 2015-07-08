@@ -105,7 +105,7 @@ describe QueueItemsController do
   end
 
   describe "POST update_list_order" do
-    context "with valid inputs"
+    context "with valid inputs" do
       before do
         session[:user_id] = Fabricate(:user).id
       end
@@ -121,9 +121,53 @@ describe QueueItemsController do
         post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 2}, {id: queue_item_two.id, list_order: 1}]
         expect(queue_item_one.reload.list_order).to eq(2)
       end
-      it "normalises the list_order"
-    context "with invalid inputs"
-    context "with unauthenticated users"
-    context "with queue items that are not in the users queue"
+      it "normalises the list_order" do
+        queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
+        queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
+        post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 5}, {id: queue_item_two.id, list_order: 4}]
+        expect(queue_item_one.reload.list_order).to eq(2)
+      end
+      it "puts the updated queue item at the top of the queue when there are only two queue items and the form is submitted with both list orders as 1" do
+        queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
+        queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
+        post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 1}, {id: queue_item_two.id, list_order: 1}]
+        expect(queue_item_two.reload.list_order).to eq(1)
+      end
+    end
+    context "with invalid inputs" do
+      it "doesn't update the list order if the data is a string" do
+        queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
+        queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
+        post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 3}, {id: queue_item_two.id, list_order: "foobar"}]
+        expect(queue_item_two.reload.list_order).to eq(2)
+      end
+      it "doesn't update the list order if the data is a float" do
+        queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
+        queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
+        post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 3}, {id: queue_item_two.id, list_order: 1.25}]
+        expect(queue_item_two.reload.list_order).to eq(2)
+      end
+    end
+    context "with unauthenticated users" do
+      it "redirects to the sign in page" do
+        queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
+        queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
+        post :update_list_order, queue_items: [{id: queue_item_one.id, "list_order"=>"2"}, {id: queue_item_two.id, "list_order"=>"1"}]
+        expect(response).to redirect_to sign_in_path
+      end
+    end
+    context "with queue items that are not in the users queue" do
+      it "doesn't update the list order" do
+        user1 = Fabricate(:user)
+        user2 = Fabricate(:user)
+        session[:user_id] = user1.id
+        queue_item_one = Fabricate(:queue_item, user_id: user1.id, list_order: 1)
+        queue_item_two = Fabricate(:queue_item, user_id: user1.id, list_order: 2)
+        queue_item_three = Fabricate(:queue_item, user_id: user2.id, list_order: 1)
+        queue_item_four = Fabricate(:queue_item, user_id: user2.id, list_order: 2)
+        post :update_list_order, queue_items: [{id: queue_item_three.id, list_order: 2}, {id: queue_item_four.id, list_order: 1}]
+        expect(queue_item_four.reload.list_order).to eq(2)
+      end
+    end
   end
 end
