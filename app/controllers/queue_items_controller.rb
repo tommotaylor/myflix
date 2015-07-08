@@ -20,12 +20,11 @@ before_action :require_user
   end
 
   def update_list_order
-    begin
-      update_queue_items
-      normalise_queue
-    rescue ActiveRecord::RecordInvalid
-      flash[:error] = "Sorry, you must enter a whole number"
-    end
+    update_queue_items
+    normalise_queue
+  rescue ActiveRecord::RecordInvalid
+    flash[:error] = "Sorry, you must enter a whole number"
+  ensure
     redirect_to my_queue_path
   end
 

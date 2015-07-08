@@ -16,4 +16,5 @@ class QueueItem < ActiveRecord::Base
     review.rating if review
   end
 
+
 end
