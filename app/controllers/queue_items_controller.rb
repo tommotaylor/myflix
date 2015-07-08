@@ -21,6 +21,7 @@ before_action :require_user
 
   def update_list_order
     update_queue_items
+    update_rating
     current_user.normalise_queue
   rescue ActiveRecord::RecordInvalid
     flash[:error] = "Sorry, you must enter a whole number"
@@ -44,6 +45,14 @@ private
         queue_item = QueueItem.find(data["id"])
         queue_item.update_attributes!(list_order: data["list_order"]) if queue_item.user_id == current_user.id
       end
+    end
+  end
+
+  def update_rating
+    params[:rating].each do |data|
+      queue_item = QueueItem.find(data["id"])
+      review = queue_item.user_review
+      review.update_attributes!(rating: data["rating"])
     end
   end
 end

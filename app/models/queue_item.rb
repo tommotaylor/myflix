@@ -16,5 +16,10 @@ class QueueItem < ActiveRecord::Base
     review.rating if review
   end
 
+  def user_review
+    review = Review.find_by(video_id: video.id, user_id: user.id)
+  end
+
 
 end
+
