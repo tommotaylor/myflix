@@ -15,13 +15,13 @@ before_action :require_user
   def destroy
     queue_item = QueueItem.find(params[:id])
     queue_item.delete if current_user.queue_items.include?(queue_item)
-    normalise_queue
+    current_user.normalise_queue
     redirect_to my_queue_path
   end
 
   def update_list_order
     update_queue_items
-    normalise_queue
+    current_user.normalise_queue
   rescue ActiveRecord::RecordInvalid
     flash[:error] = "Sorry, you must enter a whole number"
   ensure
@@ -44,12 +44,6 @@ private
         queue_item = QueueItem.find(data["id"])
         queue_item.update_attributes!(list_order: data["list_order"]) if queue_item.user_id == current_user.id
       end
-    end
-  end
-
-  def normalise_queue
-     current_user.queue_items.each_with_index do  |queue_item, index|
-      queue_item.update_attributes(list_order: index +1)
     end
   end
 end
