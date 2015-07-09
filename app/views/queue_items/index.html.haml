@@ -25,8 +25,7 @@
                   %td
                     = button_to "Play", nil, class: "btn btn-default"
                   %td
-                    = hidden_field_tag "rating[][id]", queue_item.id
-                    = select_tag("rating[][rating]", options_for_select([[],["5 Stars", 5], ["4 Stars", 4], ["3 Stars", 3], ["2 Stars", 2], ["1 Star", 1]], queue_item.rating))
+                    = select_tag("queue_items[][rating]", options_for_select([[],["5 Stars", 5], ["4 Stars", 4], ["3 Stars", 3], ["2 Stars", 2], ["1 Star", 1]], queue_item.rating))
                   %td
                     = link_to queue_item.category_name.humanize, queue_item.category
                   %td

@@ -20,8 +20,7 @@ before_action :require_user
   end
 
   def update_queue_items
-    update_list_order
-    update_rating
+    update_list
     current_user.normalise_queue
   rescue ActiveRecord::RecordInvalid
     flash[:error] = "Sorry, you must enter a whole number"
@@ -39,30 +38,13 @@ private
     current_user.queue_items.map(&:video).include?(video)
   end
 
-  def update_list_order
+  def update_list
     ActiveRecord::Base.transaction do
       params[:queue_items].each do  |data|
         queue_item = QueueItem.find(data["id"])
-        queue_item.update_attributes!(list_order: data["list_order"]) if queue_item.user_id == current_user.id
+        queue_item.update_attributes!(list_order: data["list_order"], rating: data["rating"]) if queue_item.user_id == current_user.id
       end
     end
   end
 
-  def update_rating
-    unless params[:rating].blank?
-      params[:rating].each do |data|
-        queue_item = QueueItem.find(data["id"])
-        if queue_item.user_review.blank?
-          create_review(data, queue_item.video)
-        else
-          review = queue_item.user_review
-          review.update_attributes!(rating: data["rating"]) if review.user_id == current_user.id
-        end
-      end
-    end
-  end
-
-  def create_review(data, video)
-    review = Review.create(rating: data["rating"], body: "This review has no content", video_id: video.id, user_id: current_user.id)
-  end
 end
