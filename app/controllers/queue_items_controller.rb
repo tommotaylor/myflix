@@ -49,10 +49,20 @@ private
   end
 
   def update_rating
-    params[:rating].each do |data|
-      queue_item = QueueItem.find(data["id"])
-      review = queue_item.user_review
-      review.update_attributes!(rating: data["rating"])
+    unless params[:rating].blank?
+      params[:rating].each do |data|
+        queue_item = QueueItem.find(data["id"])
+        if queue_item.user_review.blank?
+          create_review(data, queue_item.video)
+        else
+          review = queue_item.user_review
+          review.update_attributes!(rating: data["rating"]) if review.user_id == current_user.id
+        end
+      end
     end
+  end
+
+  def create_review(data, video)
+    review = Review.create(rating: data["rating"], body: "This review has no content", video_id: video.id, user_id: current_user.id)
   end
 end

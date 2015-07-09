@@ -134,7 +134,19 @@ describe QueueItemsController do
         post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 5}, {id: queue_item_two.id, list_order: 4}]
         expect(queue_item_one.reload.list_order).to eq(2)
       end
-      it "updates the rating of the user"
+      it "updates the rating of the user" do
+        video = Fabricate(:video)
+        review = Fabricate(:review, video_id: video.id, user_id: session[:user_id], rating: 1)
+        queue_item = Fabricate(:queue_item, user_id: session[:user_id], video_id: video.id, list_order: 1)
+        post :update_queue_items, rating: [{id: queue_item.id, rating: 5}], queue_items: [{id: queue_item.id, list_order: 1}]
+        expect(review.reload.rating).to eq(5)
+      end
+      it "creates a new rating if none exists" do
+        video = Fabricate(:video)
+        queue_item = Fabricate(:queue_item, user_id: session[:user_id], video_id: video.id, list_order: 1)
+        post :update_queue_items, rating: [{id: queue_item.id, rating: 5}], queue_items: [{id: queue_item.id, list_order: 1}]
+        expect(queue_item.rating).to eq(5)
+      end
       
     end
     context "with invalid inputs" do
@@ -159,6 +171,17 @@ describe QueueItemsController do
         post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 3.5}, {id: queue_item_two.id, list_order: 2}]
         expect(flash[:error]).to be_present
       end
+      it "doesn't save the rating" do
+        alice = User.find(session[:user_id])
+        video1 = Fabricate(:video)
+        video2 = Fabricate(:video)
+        review1 = Fabricate(:review, video_id: video1.id, user_id: session[:user_id], rating: 4)
+        review2 = Fabricate(:review, video_id: video2.id, user_id: session[:user_id], rating: 5)
+        queue_item1 = Fabricate(:queue_item, user_id: session[:user_id], video_id: video1.id, list_order: 1)
+        queue_item2 = Fabricate(:queue_item, user_id: session[:user_id], video_id: video2.id, list_order: 2)
+        post :update_queue_items, rating: [{id: queue_item1.id, rating: 6}, {id: queue_item2.id, rating: "foobar"}], queue_items: [{id: queue_item1.id, list_order: 1}, {id: queue_item2.id, list_order: 2}]
+        expect(alice.queue_items.map(&:rating)).to eq([4, 5])
+      end
     end
     context "with unauthenticated users" do
       it "redirects to the sign in page" do
@@ -179,6 +202,16 @@ describe QueueItemsController do
         queue_item_four = Fabricate(:queue_item, user_id: user2.id, list_order: 2)
         post :update_queue_items, queue_items: [{id: queue_item_three.id, list_order: 2}, {id: queue_item_four.id, list_order: 1}]
         expect(queue_item_four.reload.list_order).to eq(2)
+      end
+      it "doesn't update the rating" do
+        user1 = Fabricate(:user)
+        user2 = Fabricate(:user)
+        session[:user_id] = user1.id
+        video = Fabricate(:video)
+        review = Fabricate(:review, video_id: video.id, user_id: user2.id, rating: 5)
+        queue_item = Fabricate(:queue_item, user_id: user2.id, video_id: video.id, list_order: 1)
+        post :update_queue_items, rating: [{id: queue_item.id, rating: 1}], queue_items: [{id: queue_item.id, list_order: 1}]
+        expect(queue_item.reload.rating).to eq(5)
       end
     end
   end
