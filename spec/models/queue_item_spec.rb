@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 describe QueueItem do
-  it { should belong_to (:video) }
-  it { should belong_to (:user) }
+  it { should belong_to(:video) }
+  it { should belong_to(:user) }
+  it { should validate_numericality_of(:list_order).only_integer }
 
   describe "#category_name" do
     it "returns category name of queue item" do

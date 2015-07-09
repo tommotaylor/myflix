@@ -1,4 +1,6 @@
 require 'rails_helper'
+require 'pry'
+require 'pry-nav'
 
 describe QueueItemsController do
 
@@ -100,17 +102,111 @@ describe QueueItemsController do
       delete :destroy, id: queue_item.id
       expect(response).to redirect_to sign_in_path
     end
+    it "normalises the queue after delete" do
+      queue_item1 = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
+      queue_item2 = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
+      queue_item3 = Fabricate(:queue_item, user_id: session[:user_id], list_order: 3)
+      delete :destroy, id: queue_item2.id
+      expect(queue_item3.reload.list_order).to eq(2)
+    end
   end
 
-  describe "PATCH update_list_order" do
-    before do
-      session[:user_id] = Fabricate(:user).id
-    end
-    it "redirects to my_queue" do
-      patch :update_list_order
-      expect(response).to redirect_to my_queue_path
-    end
-    it "updates the list_order of the queue item"
+  describe "POST update_list_order" do
+    context "with valid inputs" do
 
+      let(:video1) {Fabricate(:video)}
+      let(:video2) {Fabricate(:video)}
+      let(:queue_item_one) {Fabricate(:queue_item, user_id: session[:user_id], list_order: 1, video_id: video1.id)}
+      let(:queue_item_two) {Fabricate(:queue_item, user_id: session[:user_id], list_order: 2, video_id: video2.id)}
+
+      before do
+        session[:user_id] = Fabricate(:user).id
+      end
+
+      it "redirects to my_queue" do
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, "list_order"=>"2"}, {id: queue_item_two.id, "list_order"=>"1"}]
+        expect(response).to redirect_to my_queue_path
+      end
+      it "saves the queue items' new list_order" do
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 2}, {id: queue_item_two.id, list_order: 1}]
+        expect(queue_item_one.reload.list_order).to eq(2)
+      end
+      it "normalises the list_order" do
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 5}, {id: queue_item_two.id, list_order: 4}]
+        expect(queue_item_one.reload.list_order).to eq(2)
+      end
+      it "updates the rating of the user" do
+        review = Fabricate(:review, video_id: video1.id, user_id: session[:user_id], rating: 1)
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 1, rating: 5}]
+        expect(review.reload.rating).to eq(5)
+      end
+      it "creates a new rating if none exists" do
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 1, rating: 5}]
+        expect(queue_item_one.reload.rating).to eq(5)
+      end
+      
+    end
+    context "with invalid inputs" do
+
+      let(:video1) {Fabricate(:video)}
+      let(:video2) {Fabricate(:video)}
+      let(:queue_item_one) {Fabricate(:queue_item, user_id: session[:user_id], list_order: 1, video_id: video1.id)}
+      let(:queue_item_two) {Fabricate(:queue_item, user_id: session[:user_id], list_order: 2, video_id: video2.id)}
+
+      before do
+        session[:user_id] = Fabricate(:user).id
+      end
+
+      it "doesn't update the list order if the data is a string" do
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 3}, {id: queue_item_two.id, list_order: "foobar"}]
+        expect(queue_item_one.reload.list_order).to eq(1)
+      end
+      it "doesn't update the list order if the data is a float" do
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 3.5}, {id: queue_item_two.id, list_order: 2}]
+        expect(queue_item_one.reload.list_order).to eq(1)
+      end
+      it "flashes an error" do
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 3.5}, {id: queue_item_two.id, list_order: 2}]
+        expect(flash[:danger]).to be_present
+      end
+      it "doesn't save the rating" do
+        alice = User.find(session[:user_id])
+        review1 = Fabricate(:review, video_id: video1.id, user_id: session[:user_id], rating: 4)
+        review2 = Fabricate(:review, video_id: video2.id, user_id: session[:user_id], rating: 5)
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 1, rating: 6}, {id: queue_item_two.id, list_order: 2, rating: "foobar"}]
+        expect(alice.queue_items.map(&:rating)).to eq([4, 5])
+      end
+    end
+    context "with unauthenticated users" do
+      it "redirects to the sign in page" do
+        queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
+        queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, "list_order"=>"2"}, {id: queue_item_two.id, "list_order"=>"1"}]
+        expect(response).to redirect_to sign_in_path
+      end
+    end
+    context "with queue items that are not in the users queue" do
+      it "doesn't update the list order" do
+        user1 = Fabricate(:user)
+        user2 = Fabricate(:user)
+        session[:user_id] = user1.id
+        queue_item_one = Fabricate(:queue_item, user_id: user1.id, list_order: 1)
+        queue_item_two = Fabricate(:queue_item, user_id: user1.id, list_order: 2)
+        queue_item_three = Fabricate(:queue_item, user_id: user2.id, list_order: 1)
+        queue_item_four = Fabricate(:queue_item, user_id: user2.id, list_order: 2)
+        post :update_queue_items, queue_items: [{id: queue_item_three.id, list_order: 2}, {id: queue_item_four.id, list_order: 1}]
+        expect(queue_item_four.reload.list_order).to eq(2)
+      end
+      it "doesn't update the rating" do
+        user1 = Fabricate(:user)
+        user2 = Fabricate(:user)
+        session[:user_id] = user1.id
+        video = Fabricate(:video)
+        review = Fabricate(:review, video_id: video.id, user_id: user2.id, rating: 5)
+        queue_item = Fabricate(:queue_item, user_id: user2.id, video_id: video.id, list_order: 1)
+        post :update_queue_items, rating: [{id: queue_item.id, rating: 1}], queue_items: [{id: queue_item.id, list_order: 1}]
+        expect(queue_item.reload.rating).to eq(5)
+      end
+    end
   end
 end
