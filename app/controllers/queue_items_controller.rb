@@ -23,7 +23,7 @@ before_action :require_user
     update_list
     current_user.normalise_queue
   rescue ActiveRecord::RecordInvalid
-    flash[:error] = "Sorry, you must enter a whole number"
+    flash[:danger] = "Sorry, you must enter a whole number"
   ensure
     redirect_to my_queue_path
   end

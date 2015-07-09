@@ -167,7 +167,7 @@ describe QueueItemsController do
       end
       it "flashes an error" do
         post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 3.5}, {id: queue_item_two.id, list_order: 2}]
-        expect(flash[:error]).to be_present
+        expect(flash[:danger]).to be_present
       end
       it "doesn't save the rating" do
         alice = User.find(session[:user_id])
