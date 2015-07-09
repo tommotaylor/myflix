@@ -9,16 +9,16 @@ feature "User signs in" do
 
   scenario "with correct credentials" do
     visit sign_in_path
-    fill_in 'Email', :with => 'tom@tom.com'
-    fill_in 'Password', :with => 'password'
+    fill_in 'Email', with: 'tom@tom.com'
+    fill_in 'Password', with: 'password'
     click_button 'Sign In'
-    expect(page).to have_content 'Welcome'
+    expect(page).to have_content User.first.name
   end
 
   scenario "with incorrect credentials" do
     visit sign_in_path
-    fill_in 'Email', :with => "bob@bob.com"
-    fill_in 'Password', :with => "password"
+    fill_in 'Email', with: "bob@bob.com"
+    fill_in 'Password', with: "password"
     click_button 'Sign In'
     expect(page).to have_content 'There is something wrong with your username or password'
   end
