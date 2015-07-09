@@ -19,8 +19,8 @@ before_action :require_user
     redirect_to my_queue_path
   end
 
-  def update_list_order
-    update_queue_items
+  def update_queue_items
+    update_list_order
     update_rating
     current_user.normalise_queue
   rescue ActiveRecord::RecordInvalid
@@ -39,7 +39,7 @@ private
     current_user.queue_items.map(&:video).include?(video)
   end
 
-  def update_queue_items
+  def update_list_order
     ActiveRecord::Base.transaction do
       params[:queue_items].each do  |data|
         queue_item = QueueItem.find(data["id"])

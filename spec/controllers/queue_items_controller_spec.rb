@@ -119,21 +119,23 @@ describe QueueItemsController do
       it "redirects to my_queue" do
         queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
         queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
-        post :update_list_order, queue_items: [{id: queue_item_one.id, "list_order"=>"2"}, {id: queue_item_two.id, "list_order"=>"1"}]
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, "list_order"=>"2"}, {id: queue_item_two.id, "list_order"=>"1"}]
         expect(response).to redirect_to my_queue_path
       end
       it "saves the queue items' new list_order" do
         queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
         queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
-        post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 2}, {id: queue_item_two.id, list_order: 1}]
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 2}, {id: queue_item_two.id, list_order: 1}]
         expect(queue_item_one.reload.list_order).to eq(2)
       end
       it "normalises the list_order" do
         queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
         queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
-        post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 5}, {id: queue_item_two.id, list_order: 4}]
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 5}, {id: queue_item_two.id, list_order: 4}]
         expect(queue_item_one.reload.list_order).to eq(2)
       end
+      it "updates the rating of the user"
+      
     end
     context "with invalid inputs" do
       before do
@@ -142,19 +144,19 @@ describe QueueItemsController do
       it "doesn't update the list order if the data is a string" do
         queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
         queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
-        post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 3}, {id: queue_item_two.id, list_order: "foobar"}]
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 3}, {id: queue_item_two.id, list_order: "foobar"}]
         expect(queue_item_one.reload.list_order).to eq(1)
       end
       it "doesn't update the list order if the data is a float" do
         queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
         queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
-        post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 3.5}, {id: queue_item_two.id, list_order: 2}]
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 3.5}, {id: queue_item_two.id, list_order: 2}]
         expect(queue_item_one.reload.list_order).to eq(1)
       end
       it "flashes an error" do
         queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
         queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
-        post :update_list_order, queue_items: [{id: queue_item_one.id, list_order: 3.5}, {id: queue_item_two.id, list_order: 2}]
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 3.5}, {id: queue_item_two.id, list_order: 2}]
         expect(flash[:error]).to be_present
       end
     end
@@ -162,7 +164,7 @@ describe QueueItemsController do
       it "redirects to the sign in page" do
         queue_item_one = Fabricate(:queue_item, user_id: session[:user_id], list_order: 1)
         queue_item_two = Fabricate(:queue_item, user_id: session[:user_id], list_order: 2)
-        post :update_list_order, queue_items: [{id: queue_item_one.id, "list_order"=>"2"}, {id: queue_item_two.id, "list_order"=>"1"}]
+        post :update_queue_items, queue_items: [{id: queue_item_one.id, "list_order"=>"2"}, {id: queue_item_two.id, "list_order"=>"1"}]
         expect(response).to redirect_to sign_in_path
       end
     end
@@ -175,7 +177,7 @@ describe QueueItemsController do
         queue_item_two = Fabricate(:queue_item, user_id: user1.id, list_order: 2)
         queue_item_three = Fabricate(:queue_item, user_id: user2.id, list_order: 1)
         queue_item_four = Fabricate(:queue_item, user_id: user2.id, list_order: 2)
-        post :update_list_order, queue_items: [{id: queue_item_three.id, list_order: 2}, {id: queue_item_four.id, list_order: 1}]
+        post :update_queue_items, queue_items: [{id: queue_item_three.id, list_order: 2}, {id: queue_item_four.id, list_order: 1}]
         expect(queue_item_four.reload.list_order).to eq(2)
       end
     end
