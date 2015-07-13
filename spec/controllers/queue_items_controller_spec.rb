@@ -10,12 +10,12 @@ describe QueueItemsController do
       expect(response).to redirect_to sign_in_path
     end
     it "renders the index page" do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       get :index
       expect(response).to render_template(:index)
     end
     it "sets the @queue_items variable" do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       video = Fabricate(:video)
       queue_items = Fabricate(:queue_item, video_id: video.id, user_id: session[:user_id])
       get :index
@@ -26,7 +26,7 @@ describe QueueItemsController do
   describe "POST create" do
     context "signed in" do 
       before do
-        session[:user_id] = Fabricate(:user).id
+        set_current_user
       end
       it "creates a queue item" do
         video = Fabricate(:video)
@@ -73,7 +73,7 @@ describe QueueItemsController do
 
   describe "POST delete" do
     before do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
     end
     it "redirects to my_queue" do
       video = Fabricate(:video)
@@ -120,7 +120,7 @@ describe QueueItemsController do
       let(:queue_item_two) {Fabricate(:queue_item, user_id: session[:user_id], list_order: 2, video_id: video2.id)}
 
       before do
-        session[:user_id] = Fabricate(:user).id
+        set_current_user
       end
 
       it "redirects to my_queue" do
@@ -154,7 +154,7 @@ describe QueueItemsController do
       let(:queue_item_two) {Fabricate(:queue_item, user_id: session[:user_id], list_order: 2, video_id: video2.id)}
 
       before do
-        session[:user_id] = Fabricate(:user).id
+        set_current_user
       end
 
       it "doesn't update the list order if the data is a string" do
@@ -189,7 +189,7 @@ describe QueueItemsController do
       it "doesn't update the list order" do
         user1 = Fabricate(:user)
         user2 = Fabricate(:user)
-        session[:user_id] = user1.id
+        set_current_user(user1)
         queue_item_one = Fabricate(:queue_item, user_id: user1.id, list_order: 1)
         queue_item_two = Fabricate(:queue_item, user_id: user1.id, list_order: 2)
         queue_item_three = Fabricate(:queue_item, user_id: user2.id, list_order: 1)
@@ -200,7 +200,7 @@ describe QueueItemsController do
       it "doesn't update the rating" do
         user1 = Fabricate(:user)
         user2 = Fabricate(:user)
-        session[:user_id] = user1.id
+        set_current_user(user1)
         video = Fabricate(:video)
         review = Fabricate(:review, video_id: video.id, user_id: user2.id, rating: 5)
         queue_item = Fabricate(:queue_item, user_id: user2.id, video_id: video.id, list_order: 1)
