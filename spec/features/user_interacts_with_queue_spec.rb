@@ -19,7 +19,7 @@ require 'rails_helper'
     assert_video_queued(video1)
 
     click_link(video1.title)
-    expect(page).not_to have_link '+ My Queue'
+    assert_link_gone('+ My Queue')
 
     visit home_path
     find_and_click(video2)
@@ -29,35 +29,16 @@ require 'rails_helper'
     find_and_click(video3)
     queue_video(video3)
 
-    fill_in "video_id_#{video1.id}", with: 3
-    fill_in "video_id_#{video2.id}", with: 1
-    fill_in "video_id_#{video3.id}", with: 2
+    set_video_position(video1, 3)
+    set_video_position(video2, 1)
+    set_video_position(video3, 2)
 
-    click_button 'Update Instant Queue'
-    expect(find("#video_id_#{video1.id}").value).to eq("3")
-    expect(find("#video_id_#{video2.id}").value).to eq("1")
-    expect(find("#video_id_#{video3.id}").value).to eq("2")
+    update_queue
+
+    expect_video_position(video1, 3)
+    expect_video_position(video2, 1)
+    expect_video_position(video3, 2)
     
-
-
-
-
-
-
-# #clicks title, goes to correct video and there is no '+ My Queue' button
-# click_link video1.title
-# expect(page).to have_content "Watch Now"
-# expect(page).to not_have_content '+ My Queue'
-
-# #adds two more videos to queue
-# click_video video2 IMPLEMENT
-# click_button '+ My Queue'
-# expect(page).to have_content "List Order"
-# expect(page).to have_content video2.title
-
-# #update list order
-# fill_in 'List Order', with: 5
-# expect the order of the list to change around
   end
 
   def assert_signed_in
@@ -72,6 +53,10 @@ require 'rails_helper'
     find("a[href='/videos/#{video.id}']").click
   end
 
+  def assert_link_gone(link)
+    expect(page).not_to have_link link
+  end
+
   def queue_video(video)
     click_link '+ My Queue'
   end
@@ -79,6 +64,18 @@ require 'rails_helper'
   def assert_video_queued(video)
     expect(page).to have_content video.title
     expect(page).not_to have_content "Watch Now"
+  end
+
+  def set_video_position(video, position)
+    fill_in "video_id_#{video.id}", with: position
+  end
+
+  def update_queue
+    click_button 'Update Instant Queue'
+  end
+
+  def expect_video_position(video, position)
+    expect(find("#video_id_#{video.id}").value).to eq("#{position}")
   end
 end
 
