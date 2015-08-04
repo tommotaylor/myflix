@@ -54,7 +54,7 @@ require 'rails_helper'
   end
 
   def assert_link_gone(link)
-    expect(page).not_to have_link link
+    expect(page).to have_no_link link
   end
 
   def queue_video(video)
@@ -63,7 +63,7 @@ require 'rails_helper'
 
   def assert_video_queued(video)
     expect(page).to have_content video.title
-    expect(page).not_to have_content "Watch Now"
+    expect(page).to have_no_content "Watch Now"
   end
 
   def set_video_position(video, position)
