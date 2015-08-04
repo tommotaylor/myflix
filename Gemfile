@@ -12,6 +12,7 @@ gem 'pg'
 gem 'bcrypt-ruby'
 gem 'bootstrap_form'
 
+
 group :development do
   gem 'thin'
   gem "better_errors"
