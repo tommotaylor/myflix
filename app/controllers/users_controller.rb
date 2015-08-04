@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
-  
+
+before_action :require_user, only: :show
+
   def new
     redirect_to home_path unless !signed_in?
     @user = User.new
@@ -18,9 +20,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-  end
-
-  def edit
   end
 
   private

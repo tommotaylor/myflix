@@ -44,16 +44,15 @@ describe UsersController do
 
   describe "GET show" do
     let(:user) {Fabricate(:user)}
-    before do
-      session[:user_id] = user.id
+
+    it_behaves_like "requires sign in" do
+      let(:action) {get :show, id: user.id}
     end
+
     it "sets @user variable" do
+      set_current_user
       get :show, id: user.id
       expect(assigns(:user)).to be_instance_of(User)
-    end
-    it "renders :show" do
-      get :show, id: user.id
-      expect(response).to render_template(:show)
     end
   end
 end
