@@ -70,5 +70,11 @@ describe RelationshipsController do
       post :create, leader_id: user2.id
       expect(Relationship.count).to eq(1)
     end
+    it "does not allow one to follow oneself" do
+      user1 = Fabricate(:user)
+      set_current_user(user1)
+      post :create, leader_id: user1.id
+      expect(Relationship.count).to eq(0)      
+    end
   end
 end
