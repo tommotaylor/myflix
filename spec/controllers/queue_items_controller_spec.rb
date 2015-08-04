@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'pry'
-require 'pry-nav'
 
 describe QueueItemsController do
 
