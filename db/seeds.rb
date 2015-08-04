@@ -87,8 +87,8 @@ Review.create!([
     user_id: 1 }])
 
 Relationship.create!([
-  { user_id: 1,
-    followee_id: 2
+  { follower_id: 1,
+    leader_id: 2
     },
-  { user_id: 1,
-    followee_id: 3 }])
+  { follower_id: 1,
+    leader_id: 3 }])
