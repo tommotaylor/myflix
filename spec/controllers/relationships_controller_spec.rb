@@ -16,7 +16,7 @@ describe RelationshipsController do
   end
 
   describe "DELETE destroy" do
-    it "redirects to my_queue" do
+    it "redirects to people page" do
       user1 = Fabricate(:user)
       user2 = Fabricate(:user)
       set_current_user(user1)
@@ -43,6 +43,32 @@ describe RelationshipsController do
     end
     it_behaves_like "requires sign in" do
       let(:action) {delete :destroy, id: 1}
+    end
+  end
+
+  describe "POST create" do
+    it "redirects to people page" do
+      user1 = Fabricate(:user)
+      user2 = Fabricate(:user)
+      set_current_user(user1)
+      post :create, leader_id: user2.id
+      expect(response).to redirect_to people_path
+    end
+    it "creates the relationship with the current user and associated leader" do
+      user1 = Fabricate(:user)
+      user2 = Fabricate(:user)
+      set_current_user(user1)
+      post :create, leader_id: user2.id
+      expect(Relationship.first.leader).to eq(user2)
+      expect(Relationship.first.follower).to eq(user1)
+    end
+    it "does not create the relationship if the user is already being followed by the current user" do
+      user1 = Fabricate(:user)
+      user2 = Fabricate(:user)
+      set_current_user(user1)
+      Relationship.create(follower_id: user1.id, leader_id: user2.id)
+      post :create, leader_id: user2.id
+      expect(Relationship.count).to eq(1)
     end
   end
 end

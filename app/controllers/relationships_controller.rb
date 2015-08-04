@@ -12,4 +12,17 @@ before_action :require_user
     flash[:success] = "You are no longer following that user."
     redirect_to people_path
   end
+
+  def create
+    leader = User.find(params[:leader_id])
+    Relationship.create(follower: current_user, leader: leader) unless is_following?(leader)
+    flash[:success] = "You are now following #{leader.name}"
+    redirect_to people_path
+  end
+
+  private
+
+  def is_following?(leader)
+    current_user.following_relationships.map(&:leader).include?(leader)
+  end
 end
