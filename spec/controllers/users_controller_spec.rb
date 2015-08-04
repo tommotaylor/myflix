@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe UsersController do
+
   describe "GET new" do
     it "sets @user if not signed in" do
       get :new
@@ -12,6 +13,7 @@ describe UsersController do
       expect(response).to redirect_to(home_path)
     end
   end
+
   describe "POST create" do
     context "if validations met" do
       before do 
@@ -37,6 +39,21 @@ describe UsersController do
       it "sets @user" do
         expect(assigns(:user)).to be_instance_of(User)
       end
+    end
+  end
+
+  describe "GET show" do
+    let(:user) {Fabricate(:user)}
+    before do
+      session[:user_id] = user.id
+    end
+    it "sets @user variable" do
+      get :show, id: user.id
+      expect(assigns(:user)).to be_instance_of(User)
+    end
+    it "renders :show" do
+      get :show, id: user.id
+      expect(response).to render_template(:show)
     end
   end
 end
