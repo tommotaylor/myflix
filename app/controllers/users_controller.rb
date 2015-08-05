@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-before_action :require_user, only: :show
+  before_action :require_user, only: :show
 
   def new
     redirect_to home_path unless !signed_in?

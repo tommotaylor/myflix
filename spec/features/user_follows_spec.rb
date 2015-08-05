@@ -5,7 +5,7 @@ feature "User follows another user" do
     leader = Fabricate(:user)
     comedy = Fabricate(:category)
     video = Fabricate(:video, category: comedy)
-    review = Fabricate(:review, rating: 5, body: "Great movie", video_id: video.id, user_id: leader.id)
+    review = Fabricate(:review, rating: 5, body: "Great movie", video: video, user: leader)
 
     sign_in
     click_video(video)
