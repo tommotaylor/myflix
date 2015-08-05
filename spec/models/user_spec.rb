@@ -22,5 +22,27 @@ describe User do
     end
   end
 
+  describe "#can_follow?(other_user)" do
+    it "returns false if already following the other user" do
+      user1 = Fabricate(:user)
+      user2 = Fabricate(:user)
+      Relationship.create(follower_id: user1.id, leader_id: user2.id)
+      expect(user1.can_follow?(user2)).to eq(false)
+    end
+    it "returns false if other_user is self" do
+      user1 = Fabricate(:user)
+      user2 = Fabricate(:user)
+      Relationship.create(follower_id: user1.id, leader_id: user2.id)
+      expect(user1.can_follow?(user1)).to eq(false)
+    end
+    it "returns true if not following and not self" do
+      user1 = Fabricate(:user)
+      user2 = Fabricate(:user)
+      user3 = Fabricate(:user)
+      Relationship.create(follower_id: user1.id, leader_id: user2.id)
+      expect(user1.can_follow?(user3)).to eq(true)
+    end
+  end
+
 
 end

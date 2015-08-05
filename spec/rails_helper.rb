@@ -50,4 +50,5 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.include(ControllerMacros, :type => :controller)
   config.include(FeatureMacros, :type => :feature)
+  config.include(ModelMacros, :type => :model)
 end
