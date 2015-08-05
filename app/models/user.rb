@@ -22,11 +22,6 @@ class User < ActiveRecord::Base
   end
 
   def can_follow?(other_user)
-    if following_relationships.map(&:leader).include?(other_user) || other_user == self
-      false
-    else
-      true
-    end
+    !(following_relationships.map(&:leader).include?(other_user) || other_user == self)
   end
-
 end
