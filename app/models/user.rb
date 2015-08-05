@@ -13,12 +13,7 @@ class User < ActiveRecord::Base
   end
 
   def video_is_queued?(video)
-    videos_in_queue = queue_items.map(&:video)
-    if videos_in_queue.include?(video)
-      true
-    else
-      false
-    end
+    queue_items.map(&:video).include?(video)
   end
 
   def can_follow?(other_user)
