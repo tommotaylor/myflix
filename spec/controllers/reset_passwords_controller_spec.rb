@@ -70,13 +70,5 @@ describe ResetPasswordsController do
       post :update, user: { password: "newpassword" }, id: User.first.password_reset_token
       expect(response).to redirect_to invalid_token_path
     end
-    it "invalidates the token once the password has been updated" do
-      user = Fabricate(:user)
-      post :create, email: user.email
-      token = User.first.password_reset_token
-      post :update, user: { password: "newpassword" }, id: token
-      post :update, user: { password: "secondpassword" }, id: token
-      expect(response).to redirect_to invalid_token_path
-    end
   end
 end
