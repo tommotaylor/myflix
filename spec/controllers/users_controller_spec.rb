@@ -41,7 +41,7 @@ describe UsersController do
       end
     end
     context "sends emails" do
-      after { ActionMailer::Base.deliveries.clear }
+      after(:each) { ActionMailer::Base.deliveries.clear }
       it "sends an email" do
         post :create, user: Fabricate.attributes_for(:user)        
         expect(ActionMailer::Base.deliveries).not_to be_empty

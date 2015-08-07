@@ -44,12 +44,10 @@ describe ResetPasswordsController do
 
   describe "GET edit" do
     it "finds and sets the correct @user variable" do
-      binding.pry
       user = Fabricate(:user)
       session[:user_id] = user.id
       post :create, email: user.email
       get :edit, id: User.first.password_reset_token
-      binding.pry
       expect(assigns(:user)).to eq(user)
     end
   end
