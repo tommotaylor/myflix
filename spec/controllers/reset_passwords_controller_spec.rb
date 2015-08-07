@@ -21,8 +21,19 @@ describe ResetPasswordsController do
         post :create, email: user.email
         expect(User.first.password_reset_sent_at).to be_present
       end
-      it "puts the correct link and token in the email"
-      it "redirects to the confirm_password_reset page" 
+      it "puts the correct link and token in the email" do
+        user = Fabricate(:user)
+        set_current_user(user)
+        post :create, email: user.email
+        message = ActionMailer::Base.deliveries.last
+        expect(message).to have_content(User.first.password_reset_token)
+      end
+      it "redirects to the confirm_password_reset page" do
+        user = Fabricate(:user)
+        set_current_user(user)
+        post :create, email: user.email
+        expect(response).to redirect_to confirm_password_reset_path
+      end
     end
     context "invalid inputs" do
       it "doesn't set token or sent at timestamp" do
@@ -31,7 +42,6 @@ describe ResetPasswordsController do
         post :create, email: "incorrect@gmail.com"
         expect(User.first.password_reset_sent_at).not_to be_present
         expect(User.first.password_reset_token).not_to be_present
-
       end
       it "redirects to the confirmation page" do
         user = Fabricate(:user)
@@ -53,7 +63,14 @@ describe ResetPasswordsController do
   end
 
   describe "POST update" do
-    it "updates the password"
+    it "updates the password" do
+      user = Fabricate(:user)
+      set_current_user(user)
+      old_password_digest = user.password_digest
+      post :create, email: user.email
+      post :update, user: { password: "newpassword" }, id: User.first.password_reset_token
+      expect(User.first.password_digest).not_to eq(old_password_digest)
+    end
     it "doesn't update if password_reset_token_set_at was more than 2 hours ago"
   end
 end

@@ -14,6 +14,13 @@ class ResetPasswordsController < ApplicationController
   end
 
   def update
+    @user = User.find_by_password_reset_token(params[:id])
+    if @user.update_attributes(user_params)
+      flash[:success] = "Your password was updated"
+      redirect_to home_path
+    else
+      render :edit
+    end
   end
 
   def confirm_password_reset
@@ -22,5 +29,10 @@ class ResetPasswordsController < ApplicationController
   def invalid_token
   end
 
+private
+
+  def user_params
+    params.require(:user).permit(:password)
+  end
 
 end

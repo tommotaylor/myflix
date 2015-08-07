@@ -1,13 +1,12 @@
 %section.reset_password.container
   .row
     .col-sm-10.col-sm-offset-1
-      %form
-        %header
-          %h1 Reset Your Password
-        %fieldset.form-group
-          %label New Password
-          .row
-            .col-sm-4
-              %input.form-control(type="password")
+      %header
+        %h1 Reset Your Password
+      = form_for @user, url: reset_password_path(params[:id]), html: { class: "form-group" } do |f|
+        %label New Password
+        .row
+          .col-sm-4
+            = f.password_field :password, class: "form-control"
         %fieldset.form-group.action
-          %input(type="submit" value="Reset Password" class="btn btn-default")
+          = f.submit "Reset Password", class: "btn btn-default"
