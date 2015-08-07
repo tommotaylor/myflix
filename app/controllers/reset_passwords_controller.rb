@@ -20,7 +20,7 @@ class ResetPasswordsController < ApplicationController
     elsif 
       @user.update_attributes(user_params)
       flash[:success] = "Your password was updated"
-      redirect_to home_path
+      redirect_to sign_in_path
     else
       render :edit
       flash[:error] = "something went wrong, try again"

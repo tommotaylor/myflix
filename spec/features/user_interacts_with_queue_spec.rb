@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-  feature "User interacts with the queue" do
+feature "User interacts with the queue" do
 
-    scenario "User adds and reorders videos in the queue" do
+  scenario "User adds and reorders videos in the queue" do
 
     comedy = Fabricate(:category)
     video1 = Fabricate(:video, category: comedy)
