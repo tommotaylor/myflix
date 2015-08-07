@@ -18,7 +18,7 @@ Myflix::Application.routes.draw do
   resources :queue_items, only: [:create, :destroy]
 
   get 'confirm_password_reset', to: 'reset_passwords#confirm_password_reset'
-
+  get 'invalid_token', to: 'reset_passwords#invalid_token'
   resources :reset_passwords, except: [:destroy]
 
   resources :categories, only: [:show, :index]

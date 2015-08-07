@@ -71,6 +71,15 @@ describe ResetPasswordsController do
       post :update, user: { password: "newpassword" }, id: User.first.password_reset_token
       expect(User.first.password_digest).not_to eq(old_password_digest)
     end
-    it "doesn't update if password_reset_token_set_at was more than 2 hours ago"
+    it "doesn't update if password_reset_token_set_at was more than 2 hours ago" do
+      user = Fabricate(:user)
+      set_current_user(user)
+      post :create, email: user.email
+      User.first.update_attributes(password_reset_sent_at: 3.hours.ago)
+      post :update, user: { password: "newpassword" }, id: User.first.password_reset_token
+      expect(response).to redirect_to invalid_token_path
+    end
+
+
   end
 end
