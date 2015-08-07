@@ -26,4 +26,9 @@ class User < ActiveRecord::Base
     save!
     AppMailer.reset_password(self).deliver
   end
+
+  def invalidate_token
+    self.password_reset_token = SecureRandom.urlsafe_base64
+    save!   
+  end
 end

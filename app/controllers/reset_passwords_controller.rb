@@ -14,16 +14,20 @@ class ResetPasswordsController < ApplicationController
   end
 
   def update
-    @user = User.find_by_password_reset_token(params[:id])
-    if @user.password_reset_sent_at < 2.hours.ago
-      redirect_to invalid_token_path
-    elsif 
-      @user.update_attributes(user_params)
-      flash[:success] = "Your password was updated"
-      redirect_to sign_in_path
+    if @user = User.find_by_password_reset_token(params[:id])
+      if @user.password_reset_sent_at < 2.hours.ago
+        redirect_to invalid_token_path
+      elsif 
+        @user.update_attributes(user_params)
+        @user.invalidate_token
+        flash[:success] = "Your password was updated"
+        redirect_to sign_in_path
+      else
+        render :edit
+        flash[:error] = "something went wrong, try again"
+      end
     else
-      render :edit
-      flash[:error] = "something went wrong, try again"
+      redirect_to invalid_token_path
     end
   end
 
