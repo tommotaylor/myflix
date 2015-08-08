@@ -1,17 +1,16 @@
 require 'rails_helper'
 
 feature "user resets password" do
-  scenario "user resets password" do
+  scenario "user successfully resets password" do
     
-    user = Fabricate(:user)
+    user = Fabricate(:user, password: "oldpassword")
     clear_emails
 
     visit sign_in_path
-    click_reset_password
-    assert_reset_password_page
+    click_link "Forgot your password?"
 
     enter_and_submit_email(user)
-    assert_confirmation_page
+    expect(page).to have_content("We have sent an email with instruction to reset your password.")
   
     open_email(user.email)
     expect(current_email).to have_content("Here is your reset password link")
@@ -19,31 +18,14 @@ feature "user resets password" do
     current_email.click_link("password reset link")
     update_password("newpassword")
 
-    visit sign_in_path
     enter_new_credentials(user, "newpassword")
-    assert_signed_in(user)
-  end
-
-  def click_reset_password
-    find("a[href='/reset_passwords/new']").click
-  end
-
-  def assert_reset_password_page
-    expect(page).to have_content("Forgot Password?")
+    expect(page).to have_content user.name
   end
 
   def enter_and_submit_email(user)
     fill_in "email", with: user.email
     click_button "Send Email"
   end
-
-  def assert_confirmation_page
-    expect(page).to have_content("We have sent an email with instruction to reset your password.")
-  end
-
-  # def follow_reset_link(user)
-  #   visit edit_reset_password_url(user.reload.password_reset_token)
-  # end
 
   def update_password(new_password)
     fill_in "user_password", with: new_password
@@ -55,9 +37,4 @@ feature "user resets password" do
     fill_in 'Password', with: password
     click_button 'Sign In'
   end
-
-  def assert_signed_in(user)
-    expect(page).to have_content user.name
-  end
-
 end
