@@ -70,11 +70,5 @@ describe ResetPasswordsController do
       post :update, user: { password: "newpassword" }, id: User.first.password_reset_token
       expect(response).to redirect_to invalid_token_path
     end
-    it "doesn't let the token work twice (sets to nil)" do
-      user = Fabricate(:user)
-      post :create, email: user.email
-      post :update, user: { password: "newpassword" }, id: User.first.password_reset_token
-      expect(User.first.password_reset_token).to be_nil
-    end
   end
 end
