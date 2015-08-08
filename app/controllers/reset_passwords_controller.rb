@@ -4,7 +4,7 @@ class ResetPasswordsController < ApplicationController
   end
 
   def create
-    user = User.find_by_email(params[:email])
+    user = User.find_by(email: params[:email])
     user.send_password_reset if user
     redirect_to confirm_password_reset_path
   end
@@ -19,6 +19,7 @@ class ResetPasswordsController < ApplicationController
       redirect_to invalid_token_path
     elsif 
       @user.update_attributes(user_params)
+      @user.update_attributes(password_reset_token: nil)
       flash[:success] = "Your password was updated"
       redirect_to sign_in_path
     else
