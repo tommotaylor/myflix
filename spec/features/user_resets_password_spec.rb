@@ -4,7 +4,8 @@ feature "user resets password" do
   scenario "user resets password" do
     
     user = Fabricate(:user)
-    
+    clear_emails
+
     visit sign_in_path
     click_reset_password
     assert_reset_password_page
@@ -12,7 +13,10 @@ feature "user resets password" do
     enter_and_submit_email(user)
     assert_confirmation_page
   
-    follow_reset_link(user)
+    open_email(user.email)
+    expect(current_email).to have_content("Here is your reset password link")
+
+    current_email.click_link("password reset link")
     update_password("newpassword")
 
     visit sign_in_path
@@ -37,9 +41,9 @@ feature "user resets password" do
     expect(page).to have_content("We have sent an email with instruction to reset your password.")
   end
 
-  def follow_reset_link(user)
-    visit edit_reset_password_url(user.reload.password_reset_token)
-  end
+  # def follow_reset_link(user)
+  #   visit edit_reset_password_url(user.reload.password_reset_token)
+  # end
 
   def update_password(new_password)
     fill_in "user_password", with: new_password

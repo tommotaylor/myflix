@@ -25,6 +25,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'faker'
   gem 'capybara', :git => 'https://github.com/jnicklas/capybara.git'
+  gem 'capybara-email'
 end
 
 group :test do
