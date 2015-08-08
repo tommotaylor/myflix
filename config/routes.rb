@@ -21,6 +21,8 @@ Myflix::Application.routes.draw do
   get 'invalid_token', to: 'reset_passwords#invalid_token'
   resources :reset_passwords, except: [:destroy]
 
+  get 'invite', to: 'invites#new'
+
   resources :categories, only: [:show, :index]
   resources :users, except: [:destroy]
 
