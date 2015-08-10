@@ -18,11 +18,11 @@ describe ResetPasswordsController do
         post :create, email: user.email
         expect(User.first.password_reset_sent_at).to be_present
       end
-      it "puts the correct link and token in the email" do
+      it "puts the link in the email" do
         user = Fabricate(:user)
         post :create, email: user.email
         message = ActionMailer::Base.deliveries.last
-        expect(message).to have_content(User.first.password_reset_token)
+        expect(message).to have_content("Here is your reset password link")
       end
       it "redirects to the confirm_password_reset page" do
         user = Fabricate(:user)

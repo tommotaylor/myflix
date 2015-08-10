@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <p>You have been invited to join MyFlix by <%= @invite.user.name %></p>
+  <p>With a message: <%= @invite.message %></p>
+  <p>To join MyFlix and automatically begin following <%= @invite.user.name %>: <%= link_to "Sign up here", new_user_url %></p>
+</body>
+</html>

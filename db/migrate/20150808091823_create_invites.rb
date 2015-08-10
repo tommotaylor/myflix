@@ -5,8 +5,7 @@ class CreateInvites < ActiveRecord::Migration
       t.string :friend_name
       t.string :friend_email
       t.string :message
-
-      t.timestamps
+      t.datetime :invite_sent_at
     end
   end
 end

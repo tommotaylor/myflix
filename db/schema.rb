@@ -27,8 +27,7 @@ ActiveRecord::Schema.define(version: 20150808091823) do
     t.string   "friend_name"
     t.string   "friend_email"
     t.string   "message"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "invite_sent_at"
   end
 
   create_table "queue_items", force: true do |t|
