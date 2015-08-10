@@ -1,11 +1,15 @@
 module FeatureMacros
 
-  def sign_in
-    Fabricate(:user, name: 'Tom Taylor', email: 'tom@tom.com', password: 'password')
+  def sign_in(a_user=nil)
+    user = a_user || Fabricate(:user)
     visit sign_in_path
-    fill_in 'Email', with: 'tom@tom.com'
-    fill_in 'Password', with: 'password'
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
     click_button 'Sign In'
+  end
+
+  def sign_out
+    visit sign_out_path
   end
 
 

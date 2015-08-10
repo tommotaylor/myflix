@@ -28,4 +28,8 @@ class User < ActiveRecord::Base
     save!
     AppMailer.reset_password(self).deliver
   end
+
+  def follow(user)
+    Relationship.create(follower: self, leader: user) if can_follow?(user)
+  end
 end

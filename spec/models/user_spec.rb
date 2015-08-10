@@ -63,4 +63,19 @@ describe User do
       expect(message.to).to eq([user.email])
     end
   end
+
+  describe "#follow" do
+    it "creates a follows relationship" do
+      user = Fabricate(:user)
+      user2 = Fabricate(:user)
+      user.follow(user2)
+      expect(user.reload.following_relationships.first.leader).to eq(user2)
+    end
+    it "doesn't follow ones self" do
+      user = Fabricate(:user)
+      user.follow(user)
+      expect(user.reload.following_relationships).to eq([])
+    end
+
+  end
 end

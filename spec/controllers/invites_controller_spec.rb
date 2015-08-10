@@ -8,9 +8,16 @@ describe InvitesController  do
       get :new
       expect(assigns(:invite)).to be_instance_of(Invite)
     end
+    it_behaves_like "requires sign in" do
+      let(:action) { get :new }
+    end
   end
 
   describe "POST create" do
+    it_behaves_like "requires sign in" do
+      let(:action) { post :create }
+    end
+    
     context "with valid inputs" do
       it "redirects to the home page" do
         user = Fabricate(:user)
@@ -36,10 +43,8 @@ describe InvitesController  do
         post :create, invite: Fabricate.attributes_for(:invite)
         expect(Invite.first.invite_token).not_to be_nil
       end
-      it_behaves_like "requires sign in" do
-        let(:action) { post :create }
-      end
     end
+
     context "sends emails" do
       after(:each) { ActionMailer::Base.deliveries.clear }
       it "sends an email" do

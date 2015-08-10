@@ -7,6 +7,11 @@ describe UsersController do
       get :new
       expect(assigns(:user)).to be_instance_of(User)
     end
+    it "sets the @invite variable if in the params" do
+      invite = Fabricate(:invite, invite_token: 12345)
+      get :new, invite_token: 12345
+      expect(assigns(:invite)).to eq(invite)
+    end
     it "redirects to home if signed in" do
       session[:user_id] = Fabricate(:user).id
       get :new
@@ -69,6 +74,12 @@ describe UsersController do
         invite = Fabricate(:invite, user: invitor, invite_token: 1234, friend_email: "friend@friend.com")
         post :create, user: Fabricate.attributes_for(:user, invite_token: 1234, email: invite.friend_email)
         expect(User.first.leading_relationships.first.follower).to eq(User.second)        
+      end
+      it "sets invite_token to nil after use" do
+        invitor = Fabricate(:user)
+        invite = Fabricate(:invite, user: invitor, invite_token: 1234, friend_email: "friend@friend.com")
+        post :create, user: Fabricate.attributes_for(:user, invite_token: 1234, email: invite.friend_email)
+        expect(Invite.first.invite_token).to eq(nil)
       end
     end
   end

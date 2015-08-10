@@ -18,6 +18,7 @@
             %b.caret
             %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
               %li
+                =link_to 'Invite Friend', new_invite_path
                 =link_to 'Account', user_path(current_user)
                 =link_to 'Plan and Billing', '#'
                 =link_to 'Sign Out', sign_out_path
