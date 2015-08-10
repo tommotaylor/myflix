@@ -30,6 +30,12 @@ describe InvitesController  do
         post :create, invite: Fabricate.attributes_for(:invite)
         expect(Invite.first.user).to eq(user)
       end
+      it "generates and saves the invite_token" do
+        user = Fabricate(:user)
+        set_current_user(user)
+        post :create, invite: Fabricate.attributes_for(:invite)
+        expect(Invite.first.invite_token).not_to be_nil
+      end
       it_behaves_like "requires sign in" do
         let(:action) { post :create }
       end

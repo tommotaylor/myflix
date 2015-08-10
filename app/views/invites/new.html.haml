@@ -6,12 +6,12 @@
           %h1 Invite a friend to join MyFlix!
         %fieldset
           .form-group
-            %label Friend's Name
+            = f.label :friend_name, "Friend's Name"
             .row
               .col-sm-4
                 = f.text_field :friend_name, class: 'form-control'
           .form-group
-            %label Friend's Email Address
+            = f.label :friend_email, "Friend's Email Address"
             .row
               .col-sm-4
                 = f.text_field :friend_email, class: 'form-control'
