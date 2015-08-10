@@ -19,6 +19,7 @@ class UsersController < ApplicationController
       if params[:user][:invite_token]
         @invite = Invite.find_by(invite_token: params[:user][:invite_token])
         Relationship.create(follower: @invite.user, leader: @user)
+        Relationship.create(follower: @user, leader: @invite.user)
         flash[:notice] = "Thanks for registering"
         redirect_to home_path
       else

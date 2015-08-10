@@ -64,6 +64,12 @@ describe UsersController do
         post :create, user: Fabricate.attributes_for(:user, invite_token: 1234, email: invite.friend_email)
         expect(User.first.following_relationships.first.leader).to eq(User.second)        
       end
+      it "creates a relationship where the invited friend follows the invitor" do
+        invitor = Fabricate(:user)
+        invite = Fabricate(:invite, user: invitor, invite_token: 1234, friend_email: "friend@friend.com")
+        post :create, user: Fabricate.attributes_for(:user, invite_token: 1234, email: invite.friend_email)
+        expect(User.first.leading_relationships.first.follower).to eq(User.second)        
+      end
     end
   end
 
