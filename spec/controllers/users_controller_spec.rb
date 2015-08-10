@@ -57,6 +57,14 @@ describe UsersController do
         expect(message).to have_content("Thanks for signing up to MyFlix")  
       end
     end
+    context "gets invited by a user" do
+      it "creates a relationship where the invitor follows the friend" do
+        invitor = Fabricate(:user)
+        invite = Fabricate(:invite, user: invitor, invite_token: 1234, friend_email: "friend@friend.com")
+        post :create, user: Fabricate.attributes_for(:user, invite_token: 1234, email: invite.friend_email)
+        expect(User.first.following_relationships.first.leader).to eq(User.second)        
+      end
+    end
   end
 
   describe "GET show" do
