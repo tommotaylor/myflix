@@ -16,6 +16,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       AppMailer.welcome_email(@user).deliver
+      session[:user_id] = @user.id
       if params[:user][:invite_token]
         @invite = Invite.find_by(invite_token: params[:user][:invite_token])
         Relationship.create(follower: @invite.user, leader: @user)

@@ -16,6 +16,13 @@ feature 'Invite a friend to join MyFlix' do
 
     current_email.click_link("Sign up here")
     expect(page).to have_xpath("//input[@value='friend@friend.com']")
+
+    fill_in "Password", with: "password"
+    fill_in "Full Name", with: "Mr Friend"
+    click_button "Sign Up"
+
+    click_link "People"
+    expect(page).to have_content('Tom Taylor')
   
   end
 end
