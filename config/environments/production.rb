@@ -20,10 +20,10 @@ Myflix::Application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :port           => ENV['587'],
-    :address        => ENV['smtp.mailgun.org'],
-    :user_name      => ENV['postmaster@m.mysterious-atoll-5027.herokuapp.com'],
-    :password       => ENV['8933b7e7abda6f222419344715df22d0'],
+    :port           => ENV['MAILGUN_SMTP_PORT'],
+    :address        => ENV['MAILGUN_SMTP_SERVER'],
+    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
     :domain         => 'mysterious-atoll-5027.herokuapp.com',
     :authentication => :plain }
 end
