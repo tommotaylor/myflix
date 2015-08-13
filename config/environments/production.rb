@@ -20,12 +20,12 @@ Myflix::Application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              'smtp.gmail.com',
-    port:                 587,
-    user_name:            ENV["GMAIL_USERNAME"],
-    password:             ENV["GMAIL_PASSWORD"],
-    authentication:       'plain',
-    enable_starttls_auto: true  }
+    :port           => ENV['587'],
+    :address        => ENV['smtp.mailgun.org'],
+    :user_name      => ENV['postmaster@m.mysterious-atoll-5027.herokuapp.com'],
+    :password       => ENV['8933b7e7abda6f222419344715df22d0'],
+    :domain         => 'mysterious-atoll-5027.herokuapp.com',
+    :authentication => :plain,
 end
 
-Rails.application.routes.default_url_options[:host] = "https://tranquil-fjord-4261.herokuapp.com"
+Rails.application.routes.default_url_options[:host] = "https://mysterious-atoll-5027.herokuapp.com"
