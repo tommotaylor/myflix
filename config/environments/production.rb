@@ -25,7 +25,7 @@ Myflix::Application.configure do
     :user_name      => ENV['postmaster@m.mysterious-atoll-5027.herokuapp.com'],
     :password       => ENV['8933b7e7abda6f222419344715df22d0'],
     :domain         => 'mysterious-atoll-5027.herokuapp.com',
-    :authentication => :plain,
+    :authentication => :plain }
 end
 
 Rails.application.routes.default_url_options[:host] = "https://mysterious-atoll-5027.herokuapp.com"
