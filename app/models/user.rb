@@ -22,13 +22,6 @@ class User < ActiveRecord::Base
     !(following_relationships.map(&:leader).include?(other_user) || other_user == self)
   end
 
-  def send_password_reset
-    self.password_reset_token = SecureRandom.urlsafe_base64
-    self.password_reset_sent_at = Time.now
-    save!
-    AppMailer.reset_password(self).deliver
-  end
-
   def follow(user)
     Relationship.create(follower: self, leader: user) if can_follow?(user)
   end

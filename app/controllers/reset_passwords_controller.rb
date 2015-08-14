@@ -5,16 +5,18 @@ class ResetPasswordsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
-    user.send_password_reset if user
+    if user
+      ResetPassword.new(user)
+    end
     redirect_to confirm_password_reset_path
   end
 
   def edit
-    @user = User.find_by_password_reset_token(params[:id])
+    @user = User.find_by(password_reset_token: params[:id])
   end
 
   def update
-    @user = User.find_by_password_reset_token(params[:id])
+    @user = User.find_by(password_reset_token: params[:id])
     if @user.password_reset_sent_at < 2.hours.ago
       redirect_to invalid_token_path
     elsif 
@@ -25,12 +27,6 @@ class ResetPasswordsController < ApplicationController
       render :edit
       flash[:error] = "something went wrong, try again"
     end
-  end
-
-  def confirm_password_reset
-  end
-
-  def invalid_token
   end
 
 private

@@ -45,25 +45,6 @@ describe User do
     end
   end
 
-  describe "#send_password_reset" do
-    it "sets the users password_reset_token" do
-      user = Fabricate(:user)
-      user.send_password_reset
-      expect(user.password_reset_token).to be_present
-    end
-    it "sets the users password_reset_sent_at" do
-      user = Fabricate(:user)
-      user.send_password_reset
-      expect(user.password_reset_sent_at).to be_present
-    end
-    it "sends an email to the correct user" do
-      user = Fabricate(:user)
-      user.send_password_reset
-      message = ActionMailer::Base.deliveries.last
-      expect(message.to).to eq([user.email])
-    end
-  end
-
   describe "#follow" do
     it "creates a follows relationship" do
       user = Fabricate(:user)

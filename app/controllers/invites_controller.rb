@@ -9,11 +9,13 @@ class InvitesController < ApplicationController
   def create
     @invite = Invite.new(invite_params)
     @invite.user = current_user
-    if User.find_by(email: @invite.friend_email)
+    invitation = Invitation.new(invite_params, current_user)
+
+    if invitation.friend_is_member?
       flash[:notice] = "This person is already a member"
       render :new
     elsif @invite.save
-      @invite.send_invitation
+      invitation.send_invite(@invite)
       flash[:success] = "We have sent an invite to your friend"
       redirect_to home_path
     else
