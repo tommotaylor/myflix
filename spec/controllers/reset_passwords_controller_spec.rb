@@ -8,10 +8,9 @@ describe ResetPasswordsController do
         post :create, email: user.email
         expect(ActionMailer::Base.deliveries.last.to).to eq([user.email])
       end
-      it "sets the reset password token for the user" do
-        user = Fabricate(:user)
-        post :create, email: user.email
-        expect(User.first.token).to be_present
+      it_behaves_like "saves the token" do
+        let(:object) { Fabricate(:user) }
+        let(:action) { post :create, email: object.email }
       end
       it "timestamps the password reset token for the user" do
         user = Fabricate(:user)
