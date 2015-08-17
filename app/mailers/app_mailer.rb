@@ -10,6 +10,6 @@ class AppMailer < ActionMailer::Base
 
   def send_invite_email(invite)
     @invite = invite
-    mail from: 'info@myflix.com', to: invite.friend_email, subject: '#{@invite.user.name} has invited you to join MyFlix'
+    mail from: 'info@myflix.com', to: invite.friend_email, subject: 'You have been invited to join MyFlix'
   end
 end
