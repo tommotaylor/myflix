@@ -4,8 +4,8 @@ class UsersController < ApplicationController
 
   def new
     redirect_to home_path unless !signed_in?
-    if params[:invite_token]
-      if @invite = Invite.find_by(invite_token: params[:invite_token])
+    if params[:token]
+      if @invite = Invite.find_by(token: params[:token])
         @user = User.new(email: @invite.friend_email)
       else
         redirect_to invalid_token_path
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     if @user.save
       AppMailer.welcome_email(@user).deliver
       session[:user_id] = @user.id
-      if params[:user][:invite_token]
+      if params[:user][:token]
         handle_invited_user
       else
         flash[:notice] = "Thanks for registering"
@@ -42,10 +42,10 @@ class UsersController < ApplicationController
   end
 
   def handle_invited_user
-    if @invite = Invite.find_by(invite_token: params[:user][:invite_token])
+    if @invite = Invite.find_by(token: params[:user][:token])
       @user.follow(@invite.user)
       @invite.user.follow(@user)
-      @invite.update_attributes!(invite_token: nil)
+      @invite.update_attributes!(token: nil)
       flash[:notice] = "Thanks for registering"
       redirect_to home_path
     else

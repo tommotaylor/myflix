@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20150810113541) do
     t.string   "friend_email"
     t.string   "message"
     t.datetime "invite_sent_at"
-    t.string   "invite_token"
+    t.string   "token"
   end
 
   create_table "queue_items", force: true do |t|
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20150810113541) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "password_reset_token"
+    t.string   "token"
     t.datetime "password_reset_sent_at"
   end
 

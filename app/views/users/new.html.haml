@@ -6,7 +6,7 @@
           %h1 Register
         %fieldset
           - if @invite
-            = hidden_field_tag "user[invite_token]", @invite.invite_token
+            = hidden_field_tag "user[token]", @invite.token
           = f.text_field :email, label: "Email Address"
           = f.password_field :password
           = f.text_field :name, label: "Full Name"

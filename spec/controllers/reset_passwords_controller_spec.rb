@@ -11,7 +11,7 @@ describe ResetPasswordsController do
       it "sets the reset password token for the user" do
         user = Fabricate(:user)
         post :create, email: user.email
-        expect(User.first.password_reset_token).to be_present
+        expect(User.first.token).to be_present
       end
       it "timestamps the password reset token for the user" do
         user = Fabricate(:user)
@@ -35,7 +35,7 @@ describe ResetPasswordsController do
         user = Fabricate(:user)
         post :create, email: "incorrect@gmail.com"
         expect(User.first.password_reset_sent_at).not_to be_present
-        expect(User.first.password_reset_token).not_to be_present
+        expect(User.first.token).not_to be_present
       end
       it "redirects to the confirmation page" do
         user = Fabricate(:user)
@@ -50,7 +50,7 @@ describe ResetPasswordsController do
       user = Fabricate(:user)
       session[:user_id] = user.id
       post :create, email: user.email
-      get :edit, id: User.first.password_reset_token
+      get :edit, id: User.first.token
       expect(assigns(:user)).to eq(user)
     end
   end
@@ -60,14 +60,14 @@ describe ResetPasswordsController do
       user = Fabricate(:user)
       old_password_digest = user.password_digest
       post :create, email: user.email
-      post :update, user: { password: "newpassword" }, id: User.first.password_reset_token
+      post :update, user: { password: "newpassword" }, id: User.first.token
       expect(User.first.password_digest).not_to eq(old_password_digest)
     end
     it "doesn't update if password_reset_token_set_at was more than 2 hours ago" do
       user = Fabricate(:user)
       post :create, email: user.email
       User.first.update_attributes(password_reset_sent_at: 3.hours.ago)
-      post :update, user: { password: "newpassword" }, id: User.first.password_reset_token
+      post :update, user: { password: "newpassword" }, id: User.first.token
       expect(response).to redirect_to invalid_token_path
     end
   end

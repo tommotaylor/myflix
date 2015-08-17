@@ -14,7 +14,7 @@ class Invitation
   end
 
   def send_invite(invite)
-    invite.invite_token = SecureRandom.urlsafe_base64
+    invite.token = SecureRandom.urlsafe_base64
     invite.invite_sent_at = Time.now
     invite.save!
     AppMailer.send_invite(invite).deliver

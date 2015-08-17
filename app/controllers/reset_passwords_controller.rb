@@ -12,11 +12,11 @@ class ResetPasswordsController < ApplicationController
   end
 
   def edit
-    @user = User.find_by(password_reset_token: params[:id])
+    @user = User.find_by(token: params[:id])
   end
 
   def update
-    @user = User.find_by(password_reset_token: params[:id])
+    @user = User.find_by(token: params[:id])
     if @user.password_reset_sent_at < 2.hours.ago
       redirect_to invalid_token_path
     elsif 
