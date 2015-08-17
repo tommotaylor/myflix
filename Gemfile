@@ -11,6 +11,7 @@ gem 'pg'
 gem 'bcrypt-ruby'
 gem 'bootstrap_form'
 gem 'figaro'
+gem 'sidekiq'
 
 
 group :development do
