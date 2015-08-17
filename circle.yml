@@ -4,6 +4,8 @@ machine:
 deployment:
   production:
     branch: master
+    heroku:
+      appname: shrouded-woodland-3424
     commands:
       - heroku maintenance:on --app myflix
       - heroku pg:backups capture --app myflix
@@ -12,6 +14,8 @@ deployment:
       - heroku maintenance:off --app myflix
   staging:
     branch: staging
+    heroku:
+      appname: fast-wildwood-220
     commands:
       - heroku maintenance:on --app myflix
       - git push git@heroku.com:myflix.git $CIRCLE_SHA1:refs/heads/master
