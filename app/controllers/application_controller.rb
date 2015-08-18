@@ -19,4 +19,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def require_admin
+    redirect_to sign_in_path unless signed_in? && current_user.admin == true
+  end
+
 end
