@@ -20,7 +20,9 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-    redirect_to sign_in_path unless signed_in? && current_user.admin == true
+    if !current_user.admin?
+      flash[:error] = "You cannot access that area"
+      redirect_to home_path
+    end
   end
-
 end
