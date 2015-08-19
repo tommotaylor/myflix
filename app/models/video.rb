@@ -5,7 +5,7 @@ class Video < ActiveRecord::Base
   mount_uploader :small_cover, VideoUploader
 
 
-  validates_presence_of :title, :description, :category
+  validates_presence_of :title, :description
 
   def self.search_by_title(search_term)
     return [] if search_term.blank?
