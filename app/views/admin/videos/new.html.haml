@@ -10,11 +10,11 @@
               %a(href="") Add a New Video
           %br
           %fieldset
-            = f.text_field :title, class: 'span3'
+            = f.text_field :title, class: 'form-control', control_col: "col-sm-3"
             = f.select :category_id, options_for_select(Category.all.map {|category| [category.name, category.id]})
             = f.text_area :description, rows: 8, class: 'span6'
-            = f.file_field :large_cover, class: 'span6'
-            = f.file_field :small_cover, class: 'span6'
+            = f.file_field :large_cover, class: 'form-control'
+            = f.file_field :small_cover, class: 'form-control'
             / .form-group
             /   %label.control-label.col-sm-3 Large Cover
             /   .col-sm-6
