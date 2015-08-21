@@ -1,5 +1,5 @@
 require 'carrierwave/test/matchers'
 
-describe VideoUploader do
+describe SmallCoverUploader do
   include CarrierWave::Test::Matchers
 end

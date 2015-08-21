@@ -10,7 +10,8 @@ before_action :require_admin
   def create
     @video = Video.new(video_params)
     if @video.save
-      redirect_to @video
+      flash[:success] = "The new video '#{@video.title}' was successfuly saved"
+      redirect_to new_admin_video_path
     else
       flash[:error] = "Please complete all fields"
       render :new
