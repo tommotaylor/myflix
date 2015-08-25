@@ -68,7 +68,7 @@ GEM
     carrierwave-aws (0.7.1)
       aws-sdk (~> 1.58)
       carrierwave (~> 0.7)
-    celluloid (0.16.1)
+    celluloid (0.16.0)
       timers (~> 4.0.0)
     certifi (2015.08.10)
     coderay (1.1.0)
@@ -265,3 +265,6 @@ DEPENDENCIES
   thin
   uglifier
   unicorn
+
+BUNDLED WITH
+   1.10.6
