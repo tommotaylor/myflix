@@ -4,8 +4,6 @@ require 'rails/all'
 
 Bundler.require(:default, Rails.env)
 
-CarrierWave.credentials = { :path_style => true }
-
 module Myflix
   class Application < Rails::Application
     config.encoding = "utf-8"
