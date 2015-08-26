@@ -4,7 +4,7 @@ require 'rails/all'
 
 Bundler.require(:default, Rails.env)
 
-Fog.credentials = { :path_style => true }
+CarrierWave.credentials = { :path_style => true }
 
 module Myflix
   class Application < Rails::Application
