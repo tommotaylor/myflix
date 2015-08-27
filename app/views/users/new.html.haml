@@ -1,3 +1,8 @@
+= content_for :head do
+  %script(src="https://js.stripe.com/v2/")
+  :javascript
+    Stripe.setPublishableKey(ENV['PUBLISHABLE_KEY']);
+
 %section.register.container
   .row
     .col-sm-10.col-sm-offset-1
@@ -11,5 +16,5 @@
           = f.password_field :password
           = f.text_field :name, label: "Full Name"
         .control-group.col-sm-offset-2.controls 
-          = f.submit "Sign Up", {class: "btn btn-default"}
-            
+          %script(src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="#{ENV['PUBLISHABLE_KEY']}" data-image="/img/documentation/checkout/marketplace.png" data-name="MyFlix Signup Charge" data-description="£9.99 to sign up to Myflix!" data-currency="gbp" data-amount="999" data-locale="auto")
+
