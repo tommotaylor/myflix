@@ -24,7 +24,7 @@ class UsersController < ApplicationController
         :amount      => 999,
         :description => 'Myflix signup charge',
         :currency    => 'gbp',
-        :card        => params[:stripeToken])
+        :source        => params[:stripeToken])
       AppMailer.welcome_email(@user).deliver
       session[:user_id] = @user.id
       if params[:user][:token]

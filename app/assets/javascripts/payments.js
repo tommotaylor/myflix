@@ -1,7 +1,6 @@
 jQuery(function($) {
   $('#payment-form').submit(function(event) {
     var $form = $(this);
-    alert("Hello! I am an alert box!!");
     $form.find('button').prop('disabled', true);
     Stripe.card.createToken($form, stripeResponseHandler);
     return false;
