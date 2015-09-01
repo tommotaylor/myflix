@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.1.7'
 
 gem 'bootstrap-sass'
 gem 'coffee-rails'
@@ -8,12 +9,16 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'pg'
-gem 'bcrypt-ruby'
+gem 'bcrypt'
 gem 'bootstrap_form'
 gem 'figaro'
 gem 'sidekiq'
 gem 'unicorn'
 gem 'sentry-raven'
+gem 'carrierwave'
+gem 'carrierwave-aws'
+gem 'mini_magick'
+gem 'stripe'
 
 group :development do
   gem 'thin'
@@ -41,5 +46,4 @@ end
 group :production do
   gem 'rails_12factor'
 end
-
 

@@ -19,4 +19,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def require_admin
+    if !current_user.admin?
+      flash[:error] = "You cannot access that area"
+      redirect_to home_path
+    end
+  end
 end

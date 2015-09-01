@@ -7,21 +7,21 @@ describe QueueItem do
 
   describe "#category_name" do
     it "returns category name of queue item" do
-      category = Fabricate(:category, name: "drama")
-      video = Fabricate(:video, category_id: category.id)
+      drama = Fabricate(:category, name: "drama")
+      video = Fabricate(:video, category: drama, title: "Mad Max", description: "something")
       user = Fabricate(:user)
       queue_item = Fabricate(:queue_item, video_id: video.id, user_id: user.id)
-      expect(queue_item.category_name).to eq(category.name)
+      expect(queue_item.category_name).to eq(drama.name)
     end
   end
 
   describe "#category" do
     it "returns the category of the queue item" do
-      category = Fabricate(:category, name: "drama")
-      video = Fabricate(:video, category_id: category.id)
+      drama = Fabricate(:category, name: "drama")
+      video = Fabricate(:video, category: drama)
       user = Fabricate(:user)
       queue_item = Fabricate(:queue_item, video_id: video.id, user_id: user.id)
-      expect(queue_item.category).to eq(category)
+      expect(queue_item.category).to eq(drama)
     end
   end
 

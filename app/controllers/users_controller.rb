@@ -18,6 +18,13 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      require "stripe"
+      Stripe.api_key = ENV['SECRET_KEY']
+      Stripe::Charge.create(
+        :amount      => 999,
+        :description => 'Myflix signup charge',
+        :currency    => 'gbp',
+        :source        => params[:stripeToken])
       AppMailer.welcome_email(@user).deliver
       session[:user_id] = @user.id
       if params[:user][:token]
