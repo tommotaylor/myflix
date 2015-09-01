@@ -19,6 +19,7 @@ after_fork do |server, worker|
   Sidekiq.configure_server do |config|
     config.redis = { size: 5 }
   end
+
   Signal.trap 'TERM' do
     puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT'
   end

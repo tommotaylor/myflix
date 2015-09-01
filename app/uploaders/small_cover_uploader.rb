@@ -4,8 +4,8 @@ class SmallCoverUploader < CarrierWave::Uploader::Base
 
   process :resize_to_fill => [166, 236]
   storage :aws
-  
-  def extension_white_list
-    %w(jpg jpeg gif png)
+
+  def store_dir
+    "tmp"
   end
 end
