@@ -20,6 +20,9 @@ describe UsersController do
   end
 
   describe "POST create" do
+    before do
+      StripeWrapper::Charge.stub(:create)
+    end
     context "if validations met" do
       before do 
         post :create, user: Fabricate.attributes_for(:user)

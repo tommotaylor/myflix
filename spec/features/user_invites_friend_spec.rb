@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Invite a friend to join MyFlix' do
-  scenario 'user sends invitation to friend' do
+  scenario 'user sends invitation to friend', { js: true, vcr: true } do
 
     clear_emails
     @user = Fabricate(:user)
@@ -31,6 +31,10 @@ feature 'Invite a friend to join MyFlix' do
     expect(page).to have_xpath("//input[@value='friend@friend.com']")
     fill_in "Password", with: "password"
     fill_in "Full Name", with: "Mr Friend"
+    fill_in "Credit Card Number", with: "4242424242424242"
+    fill_in "Security Code", with: "123"
+    select "1 - January", from: "date_month"
+    select "2017", from: "date_year"
     click_button "Sign Up"
   end
 
