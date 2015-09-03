@@ -10,7 +10,13 @@ require 'sidekiq/testing'
 require 'carrierwave/test/matchers'
 require 'vcr'
 Capybara.server_port = 52662
+Capybara.javascript_driver = :webkit
 Sidekiq::Testing.inline!
+Capybara::Webkit.configure do |config|
+    config.allow_url("api.stripe.com")
+    config.allow_url("js.stripe.com")
+    config.allow_url("www.gravatar.com")
+  end
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
