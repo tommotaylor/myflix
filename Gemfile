@@ -41,6 +41,10 @@ group :test do
   gem 'shoulda-matchers'
   gem 'fabrication'
   gem 'launchy'
+  gem 'vcr'
+  gem 'webmock'
+  gem 'selenium-webdriver'
+  gem "capybara-webkit"
 end
 
 group :production do

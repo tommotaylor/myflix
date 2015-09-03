@@ -17,23 +17,27 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      require "stripe"
-      Stripe.api_key = ENV['SECRET_KEY']
-      Stripe::Charge.create(
-        :amount      => 999,
-        :description => 'Myflix signup charge',
-        :currency    => 'gbp',
-        :source        => params[:stripeToken])
-      AppMailer.welcome_email(@user).deliver
-      session[:user_id] = @user.id
-      if params[:user][:token]
-        handle_invited_user
+    if @user.valid?
+      charge = StripeWrapper::Charge.create(
+        :amount => 999,
+        :source => params[:stripeToken]
+        )
+      if charge.successful?
+        @user.save
+        AppMailer.welcome_email(@user).deliver
+        session[:user_id] = @user.id
+        if params[:user][:token]
+          handle_invited_user
+        else
+          flash[:notice] = "Thanks for registering"
+          redirect_to home_path
+        end
       else
-        flash[:notice] = "Thanks for registering"
-        redirect_to home_path
+        flash[:error] = charge.error_message
+        render :new
       end
     else
+      flash[:error] = "Please fill out all user fields"
       render :new
     end
   end
