@@ -56,9 +56,9 @@ describe Video do
       expect(result).to eq(((review.rating + review2.rating.to_f)/2).round(1))
     end
 
-    it "returns an explanation when there are no reviews" do
+    it "returns nil if there are no reviews" do
       result = video.average_rating
-      expect(result).to eq("No reviews")
+      expect(result).to eq(nil)
     end
   end
 end

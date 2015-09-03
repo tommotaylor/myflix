@@ -13,12 +13,7 @@ class Video < ActiveRecord::Base
   end
 
   def average_rating
-    if self.reviews.any?
-      Review.average(:rating).round(1)
-    else
-      "No reviews"
-    end
+    reviews.average(:rating).round(1) if reviews.average(:rating)
   end
-
 end
 
