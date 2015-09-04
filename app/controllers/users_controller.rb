@@ -33,11 +33,11 @@ class UsersController < ApplicationController
           redirect_to home_path
         end
       else
-        flash[:error] = charge.error_message
+        flash.now[:error] = charge.error_message
         render :new
       end
     else
-      flash[:error] = "Please fill out all user fields"
+      flash.now[:error] = "Please fill out all user fields"
       render :new
     end
   end
