@@ -157,7 +157,7 @@ describe QueueItemsController do
 
       it "doesn't update the list order if the data is a string" do
         post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 3}, {id: queue_item_two.id, list_order: "foobar"}]
-        expect(queue_item_one.reload.list_order).to eq(1)
+        expect(QueueItem.first.list_order).to eq(1)
       end
       it "doesn't update the list order if the data is a float" do
         post :update_queue_items, queue_items: [{id: queue_item_one.id, list_order: 3.5}, {id: queue_item_two.id, list_order: 2}]
