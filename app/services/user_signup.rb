@@ -39,20 +39,13 @@ class UserSignup
     @status == :successful
   end
 
-  def invalid_invite?
-    @status == :invalid_invite
-  end
-
 
   private
 
   def handle_invited_user(invite_token)
-    if invite = Invite.find_by(token: invite_token)
-      @user.follow(invite.user)
-      invite.user.follow(@user)
-      invite.update_attributes!(token: nil)
-    else
-      @status = :failed_token
-    end
+    invite = Invite.find_by(token: invite_token)
+    @user.follow(invite.user)
+    invite.user.follow(@user)
+    invite.update_attributes!(token: nil)
   end
 end

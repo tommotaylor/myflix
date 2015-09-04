@@ -22,8 +22,6 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       flash[:notice] = "Thanks for registering"
       redirect_to home_path
-    elsif result.invalid_invite?
-      redirect_to invalid_token_path
     else
       flash.now[:error] = result.error_message
       render :new
