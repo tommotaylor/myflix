@@ -19,5 +19,4 @@ class Invitation
     invite.save!
     AppMailer.delay.send_invite_email(invite)
   end
-
 end

@@ -39,8 +39,7 @@ class UserSignup
     @status == :successful
   end
 
-
-  private
+private
 
   def handle_invited_user(invite_token)
     invite = Invite.find_by(token: invite_token)
