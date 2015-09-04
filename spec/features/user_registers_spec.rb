@@ -9,6 +9,7 @@ feature 'User registers without invite', :js, :vcr do
     fill_in_user_info(email: "tom@tom.com")
     fill_in_credit_card_info(card_number: '4242424242424242')
     click_button "Sign Up"
+    sleep 1
     expect(page).to have_content("Welcome, Tom Taylor")
   end
 
@@ -16,6 +17,7 @@ feature 'User registers without invite', :js, :vcr do
     fill_in_user_info(email: "tom@tom.com")
     fill_in_credit_card_info(card_number: '4000000000000002')
     click_button "Sign Up"
+    sleep 1
     expect(page).to have_content("Your card was declined")
   end
   
@@ -23,6 +25,7 @@ feature 'User registers without invite', :js, :vcr do
     fill_in_user_info(email: "tom@tom.com")
     fill_in_credit_card_info(card_number: '122')
     click_button "Sign Up"
+    sleep 1
     expect(page).to have_content("This card number looks invalid")
   end
 
@@ -30,6 +33,7 @@ feature 'User registers without invite', :js, :vcr do
     fill_in_user_info(email: "")
     fill_in_credit_card_info(card_number: '4242424242424242')
     click_button "Sign Up"
+    sleep 1
     expect(page).to have_content("Please fill out all user fields")
   end
   
@@ -37,6 +41,7 @@ feature 'User registers without invite', :js, :vcr do
     fill_in_user_info(email: "")
     fill_in_credit_card_info(card_number: '123')
     click_button "Sign Up"
+    sleep 1
     expect(page).to have_content("This card number looks invalid")
   end
 
