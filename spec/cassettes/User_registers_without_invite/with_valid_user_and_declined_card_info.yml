@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.stripe.com/v1/charges
     body:
       encoding: US-ASCII
-      string: amount=999&description=Myflix%20signup%20charge&currency=gbp&source=tok_16gvDa44VM564LCCg4YS6oWQ
+      string: amount=999&description=Myflix%20signup%20charge&currency=gbp&source=tok_16hKOH44VM564LCCRyl4cpCD
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -31,11 +31,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 03 Sep 2015 10:45:23 GMT
+      - Fri, 04 Sep 2015 13:38:06 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '291'
+      - '162'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -49,7 +49,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_6ukjMbxTuTiMPL
+      - req_6vAjaWgYqPJIcd
       Stripe-Version:
       - '2015-08-19'
     body:
@@ -57,12 +57,12 @@ http_interactions:
       string: |
         {
           "error": {
-            "message": "Your card was declined. Your request was in test mode, but used a non test card. For a list of valid test cards, visit: https://stripe.com/docs/testing.",
+            "message": "Your card was declined.",
             "type": "card_error",
             "code": "card_declined",
-            "charge": "ch_16gvDb44VM564LCC1D2Dnjzw"
+            "charge": "ch_16hKOI44VM564LCCiP8TTf3j"
           }
         }
     http_version: 
-  recorded_at: Thu, 03 Sep 2015 10:45:22 GMT
+  recorded_at: Fri, 04 Sep 2015 13:38:06 GMT
 recorded_with: VCR 2.9.3

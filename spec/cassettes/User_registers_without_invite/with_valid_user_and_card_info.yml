@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.stripe.com/v1/charges
     body:
       encoding: US-ASCII
-      string: amount=999&description=Myflix%20signup%20charge&currency=gbp&source=tok_16gv8t44VM564LCCO5B3qiay
+      string: amount=999&description=Myflix%20signup%20charge&currency=gbp&source=tok_16hKOF44VM564LCCuGBZSS6N
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 03 Sep 2015 10:40:33 GMT
+      - Fri, 04 Sep 2015 13:38:04 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -49,7 +49,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_6ukeMMiDN5RLSx
+      - req_6vAj0L7lMfez5z
       Stripe-Version:
       - '2015-08-19'
       Strict-Transport-Security:
@@ -58,9 +58,9 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "ch_16gv8v44VM564LCCfG7pNu3S",
+          "id": "ch_16hKOG44VM564LCCPG7qauxF",
           "object": "charge",
-          "created": 1441276833,
+          "created": 1441373884,
           "livemode": false,
           "paid": true,
           "status": "succeeded",
@@ -68,7 +68,7 @@ http_interactions:
           "currency": "gbp",
           "refunded": false,
           "source": {
-            "id": "card_16gv8t44VM564LCC3r1d4cNj",
+            "id": "card_16hKOF44VM564LCCnMWw2nPM",
             "object": "card",
             "last4": "4242",
             "brand": "Visa",
@@ -93,7 +93,7 @@ http_interactions:
             "customer": null
           },
           "captured": true,
-          "balance_transaction": "txn_16gv8v44VM564LCCAW1IEMvH",
+          "balance_transaction": "txn_16hKOG44VM564LCCrJRTRZam",
           "failure_message": null,
           "failure_code": null,
           "amount_refunded": 0,
@@ -113,10 +113,10 @@ http_interactions:
             "object": "list",
             "total_count": 0,
             "has_more": false,
-            "url": "/v1/charges/ch_16gv8v44VM564LCCfG7pNu3S/refunds",
+            "url": "/v1/charges/ch_16hKOG44VM564LCCPG7qauxF/refunds",
             "data": []
           }
         }
     http_version: 
-  recorded_at: Thu, 03 Sep 2015 10:40:32 GMT
+  recorded_at: Fri, 04 Sep 2015 13:38:05 GMT
 recorded_with: VCR 2.9.3

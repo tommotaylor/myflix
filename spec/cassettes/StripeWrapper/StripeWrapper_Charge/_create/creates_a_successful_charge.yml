@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 01 Sep 2015 15:52:05 GMT
+      - Fri, 04 Sep 2015 13:38:12 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -49,7 +49,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_6u5DgacBZvzxPW
+      - req_6vAjh2IQAb7yrN
       Stripe-Version:
       - '2015-08-19'
       Strict-Transport-Security:
@@ -58,14 +58,14 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_16gH3J44VM564LCCjbQwc6E4",
+          "id": "tok_16hKOO44VM564LCC1GzjLH5J",
           "livemode": false,
-          "created": 1441122725,
+          "created": 1441373892,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_16gH3I44VM564LCCHe69NTmM",
+            "id": "card_16hKOO44VM564LCCCVRdcui1",
             "object": "card",
             "last4": "4242",
             "brand": "Visa",
@@ -88,16 +88,16 @@ http_interactions:
             "dynamic_last4": null,
             "metadata": {}
           },
-          "client_ip": "37.157.36.218"
+          "client_ip": "82.39.238.248"
         }
     http_version: 
-  recorded_at: Tue, 01 Sep 2015 15:52:05 GMT
+  recorded_at: Fri, 04 Sep 2015 13:38:12 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/charges
     body:
       encoding: US-ASCII
-      string: amount=999&description=Myflix%20signup%20charge&currency=gbp&source=tok_16gH3J44VM564LCCjbQwc6E4
+      string: amount=999&description=Myflix%20signup%20charge&currency=gbp&source=tok_16hKOO44VM564LCC1GzjLH5J
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -123,7 +123,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 01 Sep 2015 15:52:05 GMT
+      - Fri, 04 Sep 2015 13:38:13 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -141,7 +141,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_6u5DvAbLD1EueC
+      - req_6vAjVZJgGxlqnV
       Stripe-Version:
       - '2015-08-19'
       Strict-Transport-Security:
@@ -150,9 +150,9 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "ch_16gH3J44VM564LCCfDWMV8x8",
+          "id": "ch_16hKOP44VM564LCCOTHdDIiL",
           "object": "charge",
-          "created": 1441122725,
+          "created": 1441373893,
           "livemode": false,
           "paid": true,
           "status": "succeeded",
@@ -160,7 +160,7 @@ http_interactions:
           "currency": "gbp",
           "refunded": false,
           "source": {
-            "id": "card_16gH3I44VM564LCCHe69NTmM",
+            "id": "card_16hKOO44VM564LCCCVRdcui1",
             "object": "card",
             "last4": "4242",
             "brand": "Visa",
@@ -185,7 +185,7 @@ http_interactions:
             "customer": null
           },
           "captured": true,
-          "balance_transaction": "txn_16gH3J44VM564LCCWhsXU3Ou",
+          "balance_transaction": "txn_16hKOP44VM564LCCa6GKgyaI",
           "failure_message": null,
           "failure_code": null,
           "amount_refunded": 0,
@@ -205,10 +205,10 @@ http_interactions:
             "object": "list",
             "total_count": 0,
             "has_more": false,
-            "url": "/v1/charges/ch_16gH3J44VM564LCCfDWMV8x8/refunds",
+            "url": "/v1/charges/ch_16hKOP44VM564LCCOTHdDIiL/refunds",
             "data": []
           }
         }
     http_version: 
-  recorded_at: Tue, 01 Sep 2015 15:52:05 GMT
+  recorded_at: Fri, 04 Sep 2015 13:38:13 GMT
 recorded_with: VCR 2.9.3
