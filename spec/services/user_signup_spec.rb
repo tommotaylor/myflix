@@ -8,30 +8,36 @@ describe UserSignup do
       
       let(:charge) { double(:charge, successful?: true) }
       before do
-        expect(StripeWrapper::Charge).to receive(:create).and_return(charge)
+        StripeWrapper::Charge.should_receive(:create).and_return(charge)
       end
-      after(:each) { ActionMailer::Base.deliveries.clear }
+      after do
+        ActionMailer::Base.deliveries.clear
+      end
 
       it "creates a new user" do
-        post :create, user: Fabricate.attributes_for(:user)
+        user = Fabricate.build(:user)
+        UserSignup.new(user).signup
         expect(User.count).to eq(1)
       end
         
       it "sends an email" do
-        post :create, user: Fabricate.attributes_for(:user)        
+        user = Fabricate.build(:user)
+        UserSignup.new(user).signup
         expect(ActionMailer::Base.deliveries).not_to be_empty
       end
 
       it "sends the email to the correct user" do
-        post :create, user: Fabricate.attributes_for(:user)        
+        user = Fabricate.build(:user)
+        UserSignup.new(user).signup
         message = ActionMailer::Base.deliveries.last
         expect(message.to).to eq([User.first.email])
       end
 
       it "sends the correct content" do
-        post :create, user: Fabricate.attributes_for(:user)        
+        user = Fabricate.build(:user)
+        UserSignup.new(user).signup
         message = ActionMailer::Base.deliveries.last
-        expect(message).to have_content("Thanks for signing up to MyFlix")  
+        expect(message.body).to have_content("Thanks for signing up to MyFlix")  
       end
 
        context "gets invited by a user" do
@@ -39,21 +45,24 @@ describe UserSignup do
         it "creates a relationship where the invitor follows the friend" do
           invitor = Fabricate(:user)
           invite = Fabricate(:invite, user: invitor, token: 1234, friend_email: "friend@friend.com")
-          post :create, user: Fabricate.attributes_for(:user, token: 1234, email: invite.friend_email)
+          user = Fabricate.build(:user, email: invite.friend_email)
+          UserSignup.new(user).signup(invite_token: "1234")
           expect(User.first.following_relationships.first.leader).to eq(User.second)        
         end
 
         it "creates a relationship where the invited friend follows the invitor" do
           invitor = Fabricate(:user)
           invite = Fabricate(:invite, user: invitor, token: 1234, friend_email: "friend@friend.com")
-          post :create, user: Fabricate.attributes_for(:user, token: 1234, email: invite.friend_email)
+          user = Fabricate.build(:user, email: invite.friend_email)
+          UserSignup.new(user).signup(invite_token: "1234")
           expect(User.first.leading_relationships.first.follower).to eq(User.second)        
         end
         
         it "sets token to nil after use" do
           invitor = Fabricate(:user)
           invite = Fabricate(:invite, user: invitor, token: 1234, friend_email: "friend@friend.com")
-          post :create, user: Fabricate.attributes_for(:user, token: 1234, email: invite.friend_email)
+          user = Fabricate.build(:user, email: invite.friend_email)
+          UserSignup.new(user).signup(invite_token: "1234")
           expect(Invite.first.token).to eq(nil)
         end
       end
