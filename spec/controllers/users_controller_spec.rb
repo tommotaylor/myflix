@@ -35,11 +35,17 @@ describe UsersController do
     context "unsuccessful signup" do
 
       it "renders the new template" do
-        result = double(:user_signup_response, successful?: false)
+        result = double(:user_signup_response, successful?: false, error_message: "unsuccesful signup" )
+        UserSignup.any_instance.should_receive(:signup).and_return(result)
         post :create, user: Fabricate.attributes_for(:user)
-        expect(response).to redirect_to(home_path)        
+        expect(response).to render_template(:new)        
       end
-      it "displays the correct error message"
+      it "displays error message" do
+        result = double(:user_signup_response, successful?: false, error_message: "unsuccesful signup" )
+        UserSignup.any_instance.should_receive(:signup).and_return(result)
+        post :create, user: Fabricate.attributes_for(:user)
+        expect(flash[:error]).to eq("unsuccesful signup")      
+      end
     end
   end
 
