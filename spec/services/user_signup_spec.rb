@@ -70,43 +70,50 @@ describe UserSignup do
 
     context "with invalid user info" do
 
-      before do 
-        post :create, user: Fabricate.attributes_for(:user, email: "")
+      let(:charge) { double(:charge, successful?: true) }
+      let(:user) { Fabricate.build(:user, email: "") }
+      after do
+        ActionMailer::Base.deliveries.clear
       end
 
-      it "doesn't charge the card" do
+      it "doesn't invoke StripeWrapper for the charge" do
         expect(StripeWrapper::Charge).to_not receive(:create)
+        UserSignup.new(user).signup
       end
     
       it "doesn't create a new user" do
+        UserSignup.new(user).signup
         expect(User.count).to eq(0)
       end
     
-      it "renders :new" do
-        expect(response).to render_template(:new)
+      it "sets the status variable to failed" do
+        user_signup = UserSignup.new(user).signup
+        expect(user_signup.instance_variable_get(:@status)).to eq(:failed)
       end
     end
 
     context "with valid user but declined card" do
 
       let(:charge) { double(:charge, successful?: false, error_message: "Your card was declined") }
+      let(:user) { Fabricate.build(:user) }
+
       before do
         expect(StripeWrapper::Charge).to receive(:create).and_return(charge)
       end
 
       it "doesn't create a new user" do
-        post :create, user: Fabricate.attributes_for(:user), stripeToken: '1234567'
+        UserSignup.new(user).signup
         expect(User.count).to eq(0)
       end
-
-      it "renders the new template" do
-        post :create, user: Fabricate.attributes_for(:user), stripeToken: '1234567'
-        expect(response).to render_template(:new)
+    
+      it "sets the status variable to failed" do
+        user_signup = UserSignup.new(user).signup
+        expect(user_signup.instance_variable_get(:@status)).to eq(:failed)
       end
 
-      it "sets the flash error message" do
-        post :create, user: Fabricate.attributes_for(:user), stripeToken: '1234567'
-        expect(flash[:error]).to eq("Your card was declined")
+      it "sets the error message variable" do
+        user_signup = UserSignup.new(user).signup
+        expect(user_signup.error_message).to eq("Your card was declined")
       end
     end
   end
