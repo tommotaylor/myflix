@@ -8,7 +8,7 @@ describe UserSignup do
       
       let(:charge) { double(:charge, successful?: true) }
       before do
-        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
       end
       after do
         ActionMailer::Base.deliveries.clear
@@ -37,7 +37,7 @@ describe UserSignup do
         user = Fabricate.build(:user)
         UserSignup.new(user).signup
         message = ActionMailer::Base.deliveries.last
-        expect(message.body).to have_content("Thanks for signing up to MyFlix")  
+        expect(message.body).to include("Thanks for signing up to MyFlix")  
       end
 
        context "gets invited by a user" do

@@ -21,7 +21,7 @@ describe UsersController do
   end
 
   describe "POST create" do
-
+    
     context "successful signup" do
 
       it "redirects to home path" do
