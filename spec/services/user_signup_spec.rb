@@ -85,11 +85,6 @@ describe UserSignup do
         UserSignup.new(user).signup
         expect(User.count).to eq(0)
       end
-    
-      it "sets the status variable to failed" do
-        user_signup = UserSignup.new(user).signup
-        expect(user_signup.instance_variable_get(:@status)).to eq(:failed)
-      end
     end
 
     context "with valid user but declined card" do
@@ -106,15 +101,40 @@ describe UserSignup do
         expect(User.count).to eq(0)
       end
     
-      it "sets the status variable to failed" do
-        user_signup = UserSignup.new(user).signup
-        expect(user_signup.instance_variable_get(:@status)).to eq(:failed)
-      end
-
       it "sets the error message variable" do
         user_signup = UserSignup.new(user).signup
         expect(user_signup.error_message).to eq("Your card was declined")
       end
+    end
+  end
+
+  describe ".successful?" do
+
+    context "with successful signup" do
+      let(:charge) { double(:charge, successful?: true) }
+      before do
+        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
+      end
+      
+      it "responds with true" do
+        user = Fabricate.build(:user)
+        result = UserSignup.new(user).signup
+        expect(result.successful?).to eq(true)
+      end
+    end
+
+    context "with unsuccesful signup" do
+      let(:charge) { double(:charge, successful?: false, error_message: "Unsuccesful signup") }
+      before do
+        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
+      end
+      
+      it "responds with false" do
+        user = Fabricate.build(:user)
+        result = UserSignup.new(user).signup
+        expect(result.successful?).to eq(false)
+      end
+
     end
   end
 end
