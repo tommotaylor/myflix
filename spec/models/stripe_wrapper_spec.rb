@@ -20,6 +20,8 @@ describe StripeWrapper do
         expect(response).to be_successful
       end
 
+      it "creates a customer"
+
       it "declines a card" do
         token = Stripe::Token.create(
           :card => {

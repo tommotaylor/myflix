@@ -15,6 +15,9 @@ module StripeWrapper
         :description => 'Myflix signup charge',
         :currency    => 'gbp',
         :source      => options[:source])
+      customer = Stripe::Customer.create(
+        :source => options[:source],
+        :plan => "Standard")      
       new(response: response)
     rescue Stripe::CardError => e
       new(error_message: e.message)
