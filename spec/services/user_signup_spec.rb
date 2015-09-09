@@ -134,7 +134,6 @@ describe UserSignup do
         result = UserSignup.new(user).signup
         expect(result.successful?).to eq(false)
       end
-
     end
   end
 end
