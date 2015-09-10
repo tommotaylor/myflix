@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 10 Sep 2015 12:38:34 GMT
+      - Thu, 10 Sep 2015 12:38:41 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -49,7 +49,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_6xP8tZXbQWfQZs
+      - req_6xP89rCy1kaGHh
       Stripe-Version:
       - '2015-08-19'
       Strict-Transport-Security:
@@ -58,14 +58,14 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_16jUJy44VM564LCCFbiG2LNV",
+          "id": "tok_16jUK544VM564LCCU8BprNT0",
           "livemode": false,
-          "created": 1441888714,
+          "created": 1441888721,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_16jUJy44VM564LCCDcNaTOHd",
+            "id": "card_16jUK544VM564LCCrGOvHmxH",
             "object": "card",
             "last4": "0002",
             "brand": "Visa",
@@ -91,13 +91,13 @@ http_interactions:
           "client_ip": "31.37.179.205"
         }
     http_version: 
-  recorded_at: Thu, 10 Sep 2015 12:38:34 GMT
+  recorded_at: Thu, 10 Sep 2015 12:38:41 GMT
 - request:
     method: post
-    uri: https://api.stripe.com/v1/charges
+    uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: amount=999&description=Myflix%20signup%20charge&currency=gbp&source=tok_16jUJy44VM564LCCFbiG2LNV
+      string: source=tok_16jUK544VM564LCCU8BprNT0&plan=1&email=lemuel.metz%40hilll.info
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -114,7 +114,7 @@ http_interactions:
         toms-air-2 13.4.0 Darwin Kernel Version 13.4.0: Sun Aug 17 19:50:11 PDT 2014;
         root:xnu-2422.115.4~1/RELEASE_X86_64 x86_64","hostname":"toms-air-2"}'
       Content-Length:
-      - '96'
+      - '73'
   response:
     status:
       code: 402
@@ -123,11 +123,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 10 Sep 2015 12:38:35 GMT
+      - Thu, 10 Sep 2015 12:38:42 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '162'
+      - '134'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -141,7 +141,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_6xP8eWhL49aMvj
+      - req_6xP8ewhAwc8jbB
       Stripe-Version:
       - '2015-08-19'
     body:
@@ -151,10 +151,10 @@ http_interactions:
           "error": {
             "message": "Your card was declined.",
             "type": "card_error",
-            "code": "card_declined",
-            "charge": "ch_16jUJz44VM564LCCragqHOxo"
+            "param": "",
+            "code": "card_declined"
           }
         }
     http_version: 
-  recorded_at: Thu, 10 Sep 2015 12:38:35 GMT
+  recorded_at: Thu, 10 Sep 2015 12:38:42 GMT
 recorded_with: VCR 2.9.3

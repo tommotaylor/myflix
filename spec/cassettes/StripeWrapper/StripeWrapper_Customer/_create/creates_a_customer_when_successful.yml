@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 10 Sep 2015 12:38:31 GMT
+      - Thu, 10 Sep 2015 12:38:38 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -49,7 +49,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_6xP82Oor4HTTo9
+      - req_6xP8z7CLsUPjPg
       Stripe-Version:
       - '2015-08-19'
       Strict-Transport-Security:
@@ -58,14 +58,14 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_16jUJv44VM564LCCoHuEWwyJ",
+          "id": "tok_16jUK244VM564LCCikQC7rRk",
           "livemode": false,
-          "created": 1441888711,
+          "created": 1441888718,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_16jUJv44VM564LCCRmCbFOfB",
+            "id": "card_16jUK244VM564LCCYpaZIe03",
             "object": "card",
             "last4": "4242",
             "brand": "Visa",
@@ -91,13 +91,13 @@ http_interactions:
           "client_ip": "31.37.179.205"
         }
     http_version: 
-  recorded_at: Thu, 10 Sep 2015 12:38:31 GMT
+  recorded_at: Thu, 10 Sep 2015 12:38:38 GMT
 - request:
     method: post
-    uri: https://api.stripe.com/v1/charges
+    uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: amount=999&description=Myflix%20signup%20charge&currency=gbp&source=tok_16jUJv44VM564LCCoHuEWwyJ
+      string: source=tok_16jUK244VM564LCCikQC7rRk&plan=1&email=vita%40gutmann.info
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -114,7 +114,7 @@ http_interactions:
         toms-air-2 13.4.0 Darwin Kernel Version 13.4.0: Sun Aug 17 19:50:11 PDT 2014;
         root:xnu-2422.115.4~1/RELEASE_X86_64 x86_64","hostname":"toms-air-2"}'
       Content-Length:
-      - '96'
+      - '68'
   response:
     status:
       code: 200
@@ -123,11 +123,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 10 Sep 2015 12:38:33 GMT
+      - Thu, 10 Sep 2015 12:38:40 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1441'
+      - '2367'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -141,7 +141,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_6xP8drz1DERfyM
+      - req_6xP8S465cSC005
       Stripe-Version:
       - '2015-08-19'
       Strict-Transport-Security:
@@ -150,65 +150,94 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "ch_16jUJw44VM564LCC9QtvI0QC",
-          "object": "charge",
-          "created": 1441888712,
+          "object": "customer",
+          "created": 1441888719,
+          "id": "cus_6xP8gLPe3HZRMf",
           "livemode": false,
-          "paid": true,
-          "status": "succeeded",
-          "amount": 999,
-          "currency": "gbp",
-          "refunded": false,
-          "source": {
-            "id": "card_16jUJv44VM564LCCRmCbFOfB",
-            "object": "card",
-            "last4": "4242",
-            "brand": "Visa",
-            "funding": "credit",
-            "exp_month": 9,
-            "exp_year": 2016,
-            "fingerprint": "oVapSLScRj2xH9u5",
-            "country": "US",
-            "name": null,
-            "address_line1": null,
-            "address_line2": null,
-            "address_city": null,
-            "address_state": null,
-            "address_zip": null,
-            "address_country": null,
-            "cvc_check": "pass",
-            "address_line1_check": null,
-            "address_zip_check": null,
-            "tokenization_method": null,
-            "dynamic_last4": null,
-            "metadata": {},
-            "customer": null
-          },
-          "captured": true,
-          "balance_transaction": "txn_16jUJx44VM564LCCporxbHCD",
-          "failure_message": null,
-          "failure_code": null,
-          "amount_refunded": 0,
-          "customer": null,
-          "invoice": null,
-          "description": "Myflix signup charge",
-          "dispute": null,
-          "metadata": {},
-          "statement_descriptor": null,
-          "fraud_details": {},
-          "receipt_email": null,
-          "receipt_number": null,
+          "description": null,
+          "email": "vita@gutmann.info",
           "shipping": null,
-          "destination": null,
-          "application_fee": null,
-          "refunds": {
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
             "object": "list",
-            "total_count": 0,
+            "total_count": 1,
             "has_more": false,
-            "url": "/v1/charges/ch_16jUJw44VM564LCC9QtvI0QC/refunds",
-            "data": []
-          }
+            "url": "/v1/customers/cus_6xP8gLPe3HZRMf/subscriptions",
+            "data": [
+              {
+                "id": "sub_6xP8SopMGXP9HW",
+                "plan": {
+                  "interval": "month",
+                  "name": "Standard",
+                  "created": 1441800546,
+                  "amount": 999,
+                  "currency": "gbp",
+                  "id": "1",
+                  "object": "plan",
+                  "livemode": false,
+                  "interval_count": 1,
+                  "trial_period_days": null,
+                  "metadata": {},
+                  "statement_descriptor": "MYFLIX MONTHLY SUB"
+                },
+                "object": "subscription",
+                "start": 1441888719,
+                "status": "active",
+                "customer": "cus_6xP8gLPe3HZRMf",
+                "cancel_at_period_end": false,
+                "current_period_start": 1441888719,
+                "current_period_end": 1444480719,
+                "ended_at": null,
+                "trial_start": null,
+                "trial_end": null,
+                "canceled_at": null,
+                "quantity": 1,
+                "application_fee_percent": null,
+                "discount": null,
+                "tax_percent": null,
+                "metadata": {}
+              }
+            ]
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": "gbp",
+          "sources": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_6xP8gLPe3HZRMf/sources",
+            "data": [
+              {
+                "id": "card_16jUK244VM564LCCYpaZIe03",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 9,
+                "exp_year": 2016,
+                "fingerprint": "oVapSLScRj2xH9u5",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "tokenization_method": null,
+                "dynamic_last4": null,
+                "metadata": {},
+                "customer": "cus_6xP8gLPe3HZRMf"
+              }
+            ]
+          },
+          "default_source": "card_16jUK244VM564LCCYpaZIe03"
         }
     http_version: 
-  recorded_at: Thu, 10 Sep 2015 12:38:33 GMT
+  recorded_at: Thu, 10 Sep 2015 12:38:40 GMT
 recorded_with: VCR 2.9.3

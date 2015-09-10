@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.stripe.com/v1/charges
+    uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: amount=999&description=Myflix%20signup%20charge&currency=gbp&source=tok_16hKOH44VM564LCCRyl4cpCD
+      string: source=tok_16jUJp44VM564LCCq64GX9fg&plan=1&email=tom%40tom.com
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -19,10 +19,10 @@ http_interactions:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"1.25.0","lang":"ruby","lang_version":"2.1.7 p400 (2015-08-18)","platform":"x86_64-darwin13.0","engine":"ruby","publisher":"stripe","uname":"Darwin
-        Toms-MacBook-Air-2.local 13.4.0 Darwin Kernel Version 13.4.0: Sun Aug 17 19:50:11
-        PDT 2014; root:xnu-2422.115.4~1/RELEASE_X86_64 x86_64","hostname":"Toms-MacBook-Air-2.local"}'
+        toms-air-2 13.4.0 Darwin Kernel Version 13.4.0: Sun Aug 17 19:50:11 PDT 2014;
+        root:xnu-2422.115.4~1/RELEASE_X86_64 x86_64","hostname":"toms-air-2"}'
       Content-Length:
-      - '96'
+      - '62'
   response:
     status:
       code: 402
@@ -31,11 +31,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Fri, 04 Sep 2015 13:38:06 GMT
+      - Thu, 10 Sep 2015 12:38:26 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '162'
+      - '134'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -49,7 +49,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_6vAjaWgYqPJIcd
+      - req_6xP8z2UOBf7xvQ
       Stripe-Version:
       - '2015-08-19'
     body:
@@ -59,10 +59,10 @@ http_interactions:
           "error": {
             "message": "Your card was declined.",
             "type": "card_error",
-            "code": "card_declined",
-            "charge": "ch_16hKOI44VM564LCCiP8TTf3j"
+            "param": "",
+            "code": "card_declined"
           }
         }
     http_version: 
-  recorded_at: Fri, 04 Sep 2015 13:38:06 GMT
+  recorded_at: Thu, 10 Sep 2015 12:38:26 GMT
 recorded_with: VCR 2.9.3

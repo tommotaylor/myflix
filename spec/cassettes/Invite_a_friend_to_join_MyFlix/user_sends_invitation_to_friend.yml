@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.stripe.com/v1/charges
+    uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: amount=999&description=Myflix%20signup%20charge&currency=gbp&source=tok_16hKOD44VM564LCCeWtzdxag
+      string: source=tok_16jUJi44VM564LCCkroVmjS2&plan=1&email=friend%40friend.com
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -19,10 +19,10 @@ http_interactions:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"1.25.0","lang":"ruby","lang_version":"2.1.7 p400 (2015-08-18)","platform":"x86_64-darwin13.0","engine":"ruby","publisher":"stripe","uname":"Darwin
-        Toms-MacBook-Air-2.local 13.4.0 Darwin Kernel Version 13.4.0: Sun Aug 17 19:50:11
-        PDT 2014; root:xnu-2422.115.4~1/RELEASE_X86_64 x86_64","hostname":"Toms-MacBook-Air-2.local"}'
+        toms-air-2 13.4.0 Darwin Kernel Version 13.4.0: Sun Aug 17 19:50:11 PDT 2014;
+        root:xnu-2422.115.4~1/RELEASE_X86_64 x86_64","hostname":"toms-air-2"}'
       Content-Length:
-      - '96'
+      - '68'
   response:
     status:
       code: 200
@@ -31,11 +31,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Fri, 04 Sep 2015 13:38:02 GMT
+      - Thu, 10 Sep 2015 12:38:20 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1441'
+      - '2367'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -49,7 +49,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_6vAj1tU5w970GJ
+      - req_6xP8FU98AAlNf3
       Stripe-Version:
       - '2015-08-19'
       Strict-Transport-Security:
@@ -58,65 +58,94 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "ch_16hKOE44VM564LCCxcwQFohV",
-          "object": "charge",
-          "created": 1441373882,
+          "object": "customer",
+          "created": 1441888700,
+          "id": "cus_6xP8b4bpYF1H1P",
           "livemode": false,
-          "paid": true,
-          "status": "succeeded",
-          "amount": 999,
-          "currency": "gbp",
-          "refunded": false,
-          "source": {
-            "id": "card_16hKOC44VM564LCCr4OBi6aP",
-            "object": "card",
-            "last4": "4242",
-            "brand": "Visa",
-            "funding": "credit",
-            "exp_month": 1,
-            "exp_year": 2017,
-            "fingerprint": "oVapSLScRj2xH9u5",
-            "country": "US",
-            "name": null,
-            "address_line1": null,
-            "address_line2": null,
-            "address_city": null,
-            "address_state": null,
-            "address_zip": null,
-            "address_country": null,
-            "cvc_check": "pass",
-            "address_line1_check": null,
-            "address_zip_check": null,
-            "tokenization_method": null,
-            "dynamic_last4": null,
-            "metadata": {},
-            "customer": null
-          },
-          "captured": true,
-          "balance_transaction": "txn_16hKOE44VM564LCCDy71YW9D",
-          "failure_message": null,
-          "failure_code": null,
-          "amount_refunded": 0,
-          "customer": null,
-          "invoice": null,
-          "description": "Myflix signup charge",
-          "dispute": null,
-          "metadata": {},
-          "statement_descriptor": null,
-          "fraud_details": {},
-          "receipt_email": null,
-          "receipt_number": null,
+          "description": null,
+          "email": "friend@friend.com",
           "shipping": null,
-          "destination": null,
-          "application_fee": null,
-          "refunds": {
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
             "object": "list",
-            "total_count": 0,
+            "total_count": 1,
             "has_more": false,
-            "url": "/v1/charges/ch_16hKOE44VM564LCCxcwQFohV/refunds",
-            "data": []
-          }
+            "url": "/v1/customers/cus_6xP8b4bpYF1H1P/subscriptions",
+            "data": [
+              {
+                "id": "sub_6xP8nBnWfb5nE3",
+                "plan": {
+                  "interval": "month",
+                  "name": "Standard",
+                  "created": 1441800546,
+                  "amount": 999,
+                  "currency": "gbp",
+                  "id": "1",
+                  "object": "plan",
+                  "livemode": false,
+                  "interval_count": 1,
+                  "trial_period_days": null,
+                  "metadata": {},
+                  "statement_descriptor": "MYFLIX MONTHLY SUB"
+                },
+                "object": "subscription",
+                "start": 1441888700,
+                "status": "active",
+                "customer": "cus_6xP8b4bpYF1H1P",
+                "cancel_at_period_end": false,
+                "current_period_start": 1441888700,
+                "current_period_end": 1444480700,
+                "ended_at": null,
+                "trial_start": null,
+                "trial_end": null,
+                "canceled_at": null,
+                "quantity": 1,
+                "application_fee_percent": null,
+                "discount": null,
+                "tax_percent": null,
+                "metadata": {}
+              }
+            ]
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": "gbp",
+          "sources": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_6xP8b4bpYF1H1P/sources",
+            "data": [
+              {
+                "id": "card_16jUJi44VM564LCCazT2ONnD",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 1,
+                "exp_year": 2017,
+                "fingerprint": "oVapSLScRj2xH9u5",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "tokenization_method": null,
+                "dynamic_last4": null,
+                "metadata": {},
+                "customer": "cus_6xP8b4bpYF1H1P"
+              }
+            ]
+          },
+          "default_source": "card_16jUJi44VM564LCCazT2ONnD"
         }
     http_version: 
-  recorded_at: Fri, 04 Sep 2015 13:38:02 GMT
+  recorded_at: Thu, 10 Sep 2015 12:38:20 GMT
 recorded_with: VCR 2.9.3

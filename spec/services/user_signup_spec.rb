@@ -6,9 +6,9 @@ describe UserSignup do
 
     context "correct user and correct card info" do
       
-      let(:charge) { double(:charge, successful?: true) }
+      let(:customer) { double(:customer, successful?: true) }
       before do
-        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
+        allow(StripeWrapper::Customer).to receive(:create).and_return(customer)
       end
       after do
         ActionMailer::Base.deliveries.clear
@@ -70,14 +70,14 @@ describe UserSignup do
 
     context "with invalid user info" do
 
-      let(:charge) { double(:charge, successful?: true) }
+      let(:customer) { double(:customer, successful?: true) }
       let(:user) { Fabricate.build(:user, email: "") }
       after do
         ActionMailer::Base.deliveries.clear
       end
 
       it "doesn't invoke StripeWrapper for the charge" do
-        expect(StripeWrapper::Charge).to_not receive(:create)
+        expect(StripeWrapper::Customer).to_not receive(:create)
         UserSignup.new(user).signup
       end
     
@@ -89,11 +89,11 @@ describe UserSignup do
 
     context "with valid user but declined card" do
 
-      let(:charge) { double(:charge, successful?: false, error_message: "Your card was declined") }
+      let(:customer) { double(:customer, successful?: false, error_message: "Your card was declined") }
       let(:user) { Fabricate.build(:user) }
 
       before do
-        expect(StripeWrapper::Charge).to receive(:create).and_return(charge)
+        expect(StripeWrapper::Customer).to receive(:create).and_return(customer)
       end
 
       it "doesn't create a new user" do
@@ -111,9 +111,9 @@ describe UserSignup do
   describe ".successful?" do
 
     context "with successful signup" do
-      let(:charge) { double(:charge, successful?: true) }
+      let(:customer) { double(:customer, successful?: true) }
       before do
-        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
+        allow(StripeWrapper::Customer).to receive(:create).and_return(customer)
       end
       
       it "responds with true" do
@@ -124,9 +124,9 @@ describe UserSignup do
     end
 
     context "with unsuccesful signup" do
-      let(:charge) { double(:charge, successful?: false, error_message: "Unsuccesful signup") }
+      let(:customer) { double(:customer, successful?: false, error_message: "Unsuccesful signup") }
       before do
-        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
+        allow(StripeWrapper::Customer).to receive(:create).and_return(customer)
       end
       
       it "responds with false" do
