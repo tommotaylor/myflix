@@ -4,8 +4,9 @@ describe Admin::PaymentsController do
   
   describe "GET index" do
 
-    it "redirects non admin users to home"
-    it "flashes an error to non-admin users"
+    it_behaves_like "requires sign in" do
+      let(:action) { get :index }
+    end
 
     it "sets the @payments variable" do
       set_current_admin
@@ -13,10 +14,23 @@ describe Admin::PaymentsController do
       get :index
       expect(assigns(:payments)).to include(payment)
     end
+
     it "renders the index template" do
       set_current_admin
       get :index
       expect(response).to render_template(:index)
+    end
+
+    it "redirects to home for the non admin user" do
+      set_current_user
+      get :index
+      expect(response).to redirect_to home_path
+    end
+
+    it "flashes the error to the non admin user" do
+      set_current_user
+      get :index
+      expect(flash[:error]).to be_present      
     end
   end
 end
