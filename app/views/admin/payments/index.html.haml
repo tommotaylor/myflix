@@ -16,9 +16,13 @@
                 %th Amount
                 %th Reference ID
             %tbody
-              - 8.times do
+              - @payments.each do |payment|
                 %tr
-                  %td Jane Doe
-                  %td jane@example.com
-                  %td $9.99
-                  %td csdgw321s-ad3
+                  %td
+                    = payment.user.name
+                  %td
+                    = payment.user.email
+                  %td
+                    = payment.amount
+                  %td
+                    = payment.reference_id

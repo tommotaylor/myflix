@@ -13,6 +13,7 @@ class UserSignup
         :source => options[:stripeToken]
         )
       if customer.successful?
+        @user.customer_token = customer.customer_token
         @user.save
         AppMailer.welcome_email(@user).deliver
         if options[:invite_token]

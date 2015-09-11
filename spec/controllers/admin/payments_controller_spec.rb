@@ -33,4 +33,11 @@ describe Admin::PaymentsController do
       expect(flash[:error]).to be_present      
     end
   end
+
+  describe "POST create" do
+
+    it "creates the payment"
+    it "creates the user association"
+    it "saves the stripe reference id"
+  end
 end

@@ -6,7 +6,7 @@ describe UserSignup do
 
     context "correct user and correct card info" do
       
-      let(:customer) { double(:customer, successful?: true) }
+      let(:customer) { double(:customer, successful?: true, customer_token: "abcdef") }
       before do
         allow(StripeWrapper::Customer).to receive(:create).and_return(customer)
       end
@@ -18,6 +18,12 @@ describe UserSignup do
         user = Fabricate.build(:user)
         UserSignup.new(user).signup
         expect(User.count).to eq(1)
+      end
+
+      it "stores the customer reference from stripe" do
+        user = Fabricate.build(:user)
+        UserSignup.new(user).signup
+        expect(User.first.customer_token).to eq("abcdef")
       end
         
       it "sends an email" do
@@ -111,7 +117,7 @@ describe UserSignup do
   describe ".successful?" do
 
     context "with successful signup" do
-      let(:customer) { double(:customer, successful?: true) }
+      let(:customer) { double(:customer, successful?: true, customer_token: "abcdef") }
       before do
         allow(StripeWrapper::Customer).to receive(:create).and_return(customer)
       end

@@ -7,4 +7,7 @@ before_action :require_admin
     @payments = Payment.all
   end
 
+  def create
+  end
+
 end
