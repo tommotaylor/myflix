@@ -6,8 +6,4 @@ before_action :require_admin
   def index
     @payments = Payment.all
   end
-
-  def create
-  end
-
 end
