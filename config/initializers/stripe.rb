@@ -5,14 +5,12 @@ Rails.configuration.stripe = {
 
 Stripe.api_key = ENV['SECRET_KEY']
 
-# StripeEvent.setup do
-#   subscribe 'charge.succeeded' do |event|
-#     Payment.create
-#   end
-# end
-
 StripeEvent.configure do |events|
   events.subscribe 'charge.succeeded' do |event|
-    Payment.create
+    user = User.find_by(customer_token: event.data.object.source.customer)
+    Payment.create(
+      user: user, 
+      amount: event.data.object.amount,
+      reference_id: event.data.object.id )
   end
 end
