@@ -1,3 +1,3 @@
 Fabricator(:payment) do
-  amount { 9.99 }
+  amount { 999 }
 end
