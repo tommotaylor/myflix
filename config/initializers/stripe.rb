@@ -13,4 +13,9 @@ StripeEvent.configure do |events|
       amount: event.data.object.amount,
       reference_id: event.data.object.id )
   end
+
+  events.subscribe 'charge.failed' do |event|
+    user = User.find_by(customer_token: event.data.object.source.customer)
+    user.deactivate!    
+  end
 end

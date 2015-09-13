@@ -26,4 +26,12 @@ class User < ActiveRecord::Base
   def follow(user)
     Relationship.create(follower: self, leader: user) if can_follow?(user)
   end
+
+  def deactivate!
+    self.update_attributes!(account_status: false)
+  end
+
+  def active?
+    account_status == true
+  end
 end

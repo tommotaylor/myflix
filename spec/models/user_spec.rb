@@ -57,6 +57,26 @@ describe User do
       user.follow(user)
       expect(user.reload.following_relationships).to eq([])
     end
+  end
+
+  describe "#deactivate!" do
+    it "sets the users account_status to false" do
+      user = Fabricate(:user)
+      user.deactivate!
+      expect(User.first.account_status).to eq(false)
+    end
+  end
+
+  describe "#active?" do
+    it "returns true if active" do
+      user = Fabricate(:user, account_status: true)
+      expect(user.active?).to be_truthy
+    end
+
+    it "returns false if inactive" do
+      user = Fabricate(:user, account_status: false)
+      expect(user.active?).to be_falsey
+    end
 
   end
 end

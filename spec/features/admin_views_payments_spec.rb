@@ -9,6 +9,7 @@ feature "View recent payments page" do
     admin_sign_in
     visit admin_payments_path
     expect(page).to have_content(user.name)
+    expect(page).to have_content(user.email)
     expect(page).to have_content("£9.99")
     expect(page).to have_content("12345")
   end
