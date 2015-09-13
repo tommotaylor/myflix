@@ -1,4 +1,8 @@
 class Video < ActiveRecord::Base
+  
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+  
   belongs_to :category
   has_many :reviews, -> { order(created_at: :desc) }
   mount_uploader :large_cover, LargeCoverUploader
@@ -14,6 +18,10 @@ class Video < ActiveRecord::Base
 
   def average_rating
     reviews.average(:rating).round(1) if reviews.average(:rating)
+  end
+
+  def as_indexed_json(options={})
+    as_json(only: 'title')
   end
 end
 
