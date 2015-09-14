@@ -22,4 +22,14 @@ feature "User signs in" do
     click_button 'Sign In'
     expect(page).to have_content 'There is something wrong with your username or password'
   end
+
+  scenario "with deactivated account" do
+    user = Fabricate(:user, email: 'inactive@inactive.com', password: 'password', account_status: false)
+    visit sign_in_path
+    fill_in 'Email', with: 'inactive@inactive.com'
+    fill_in 'Password', with: 'password'
+    click_button 'Sign In'
+    expect(page).to_not have_content User.first.name
+    expect(page).to have_content("Your account has been deactivated as we couldn't charge your card, please contact customer services")
+  end
 end

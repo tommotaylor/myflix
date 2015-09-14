@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'User registers without invite', { js: true, vcr: true} do
+feature 'User registers without invite', :js, :vcr do
   background do
     visit register_path
   end

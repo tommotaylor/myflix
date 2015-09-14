@@ -1,0 +1,243 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/tokens
+    body:
+      encoding: US-ASCII
+      string: card[number]=4242424242424242&card[exp_month]=9&card[exp_year]=2016&card[cvc]=314
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.25.0
+      Authorization:
+      - Bearer sk_test_LQ2d3Gx2ltVvmkZv6bzzHHY8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.25.0","lang":"ruby","lang_version":"2.1.7 p400 (2015-08-18)","platform":"x86_64-darwin13.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        toms-air-2 13.4.0 Darwin Kernel Version 13.4.0: Sun Aug 17 19:50:11 PDT 2014;
+        root:xnu-2422.115.4~1/RELEASE_X86_64 x86_64","hostname":"toms-air-2"}'
+      Content-Length:
+      - '81'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 10 Sep 2015 12:38:38 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '780'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_6xP8z7CLsUPjPg
+      Stripe-Version:
+      - '2015-08-19'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "tok_16jUK244VM564LCCikQC7rRk",
+          "livemode": false,
+          "created": 1441888718,
+          "used": false,
+          "object": "token",
+          "type": "card",
+          "card": {
+            "id": "card_16jUK244VM564LCCYpaZIe03",
+            "object": "card",
+            "last4": "4242",
+            "brand": "Visa",
+            "funding": "credit",
+            "exp_month": 9,
+            "exp_year": 2016,
+            "fingerprint": "oVapSLScRj2xH9u5",
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null,
+            "cvc_check": "unchecked",
+            "address_line1_check": null,
+            "address_zip_check": null,
+            "tokenization_method": null,
+            "dynamic_last4": null,
+            "metadata": {}
+          },
+          "client_ip": "31.37.179.205"
+        }
+    http_version: 
+  recorded_at: Thu, 10 Sep 2015 12:38:38 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers
+    body:
+      encoding: US-ASCII
+      string: source=tok_16jUK244VM564LCCikQC7rRk&plan=1&email=vita%40gutmann.info
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.25.0
+      Authorization:
+      - Bearer sk_test_LQ2d3Gx2ltVvmkZv6bzzHHY8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.25.0","lang":"ruby","lang_version":"2.1.7 p400 (2015-08-18)","platform":"x86_64-darwin13.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        toms-air-2 13.4.0 Darwin Kernel Version 13.4.0: Sun Aug 17 19:50:11 PDT 2014;
+        root:xnu-2422.115.4~1/RELEASE_X86_64 x86_64","hostname":"toms-air-2"}'
+      Content-Length:
+      - '68'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 10 Sep 2015 12:38:40 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '2367'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_6xP8S465cSC005
+      Stripe-Version:
+      - '2015-08-19'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1441888719,
+          "id": "cus_6xP8gLPe3HZRMf",
+          "livemode": false,
+          "description": null,
+          "email": "vita@gutmann.info",
+          "shipping": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_6xP8gLPe3HZRMf/subscriptions",
+            "data": [
+              {
+                "id": "sub_6xP8SopMGXP9HW",
+                "plan": {
+                  "interval": "month",
+                  "name": "Standard",
+                  "created": 1441800546,
+                  "amount": 999,
+                  "currency": "gbp",
+                  "id": "1",
+                  "object": "plan",
+                  "livemode": false,
+                  "interval_count": 1,
+                  "trial_period_days": null,
+                  "metadata": {},
+                  "statement_descriptor": "MYFLIX MONTHLY SUB"
+                },
+                "object": "subscription",
+                "start": 1441888719,
+                "status": "active",
+                "customer": "cus_6xP8gLPe3HZRMf",
+                "cancel_at_period_end": false,
+                "current_period_start": 1441888719,
+                "current_period_end": 1444480719,
+                "ended_at": null,
+                "trial_start": null,
+                "trial_end": null,
+                "canceled_at": null,
+                "quantity": 1,
+                "application_fee_percent": null,
+                "discount": null,
+                "tax_percent": null,
+                "metadata": {}
+              }
+            ]
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": "gbp",
+          "sources": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_6xP8gLPe3HZRMf/sources",
+            "data": [
+              {
+                "id": "card_16jUK244VM564LCCYpaZIe03",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 9,
+                "exp_year": 2016,
+                "fingerprint": "oVapSLScRj2xH9u5",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "tokenization_method": null,
+                "dynamic_last4": null,
+                "metadata": {},
+                "customer": "cus_6xP8gLPe3HZRMf"
+              }
+            ]
+          },
+          "default_source": "card_16jUK244VM564LCCYpaZIe03"
+        }
+    http_version: 
+  recorded_at: Thu, 10 Sep 2015 12:38:40 GMT
+recorded_with: VCR 2.9.3

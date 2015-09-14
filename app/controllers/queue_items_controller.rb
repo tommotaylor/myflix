@@ -39,7 +39,7 @@ private
   end
 
   def update_list
-    ActiveRecord::Base.transaction do
+    ActiveRecord::Base.transaction(requires_new: true) do
       params[:queue_items].each do  |data|
         queue_item = QueueItem.find(data["id"])
         queue_item.update_attributes!(list_order: data["list_order"], rating: data["rating"]) if queue_item.user_id == current_user.id

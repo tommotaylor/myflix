@@ -95,3 +95,12 @@ Relationship.create!([
     },
   { follower_id: 1,
     leader_id: 3 }])
+
+Admin::Payment.create!([
+  { user_id: 1,
+    amount: 999,
+    reference_id: 1
+    },
+  { user_id: 2,
+    amount: 999,
+    reference_id: 2 }])

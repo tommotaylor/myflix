@@ -20,6 +20,4 @@ module FeatureMacros
   def sign_out
     visit sign_out_path
   end
-
-
 end

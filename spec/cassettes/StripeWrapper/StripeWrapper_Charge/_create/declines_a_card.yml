@@ -19,8 +19,8 @@ http_interactions:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"1.25.0","lang":"ruby","lang_version":"2.1.7 p400 (2015-08-18)","platform":"x86_64-darwin13.0","engine":"ruby","publisher":"stripe","uname":"Darwin
-        Toms-MacBook-Air-2.local 13.4.0 Darwin Kernel Version 13.4.0: Sun Aug 17 19:50:11
-        PDT 2014; root:xnu-2422.115.4~1/RELEASE_X86_64 x86_64","hostname":"Toms-MacBook-Air-2.local"}'
+        toms-air-2 13.4.0 Darwin Kernel Version 13.4.0: Sun Aug 17 19:50:11 PDT 2014;
+        root:xnu-2422.115.4~1/RELEASE_X86_64 x86_64","hostname":"toms-air-2"}'
       Content-Length:
       - '81'
   response:
@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 03 Sep 2015 09:32:48 GMT
+      - Thu, 10 Sep 2015 12:38:34 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -49,7 +49,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_6ujYN52wfbC7vx
+      - req_6xP8tZXbQWfQZs
       Stripe-Version:
       - '2015-08-19'
       Strict-Transport-Security:
@@ -58,14 +58,14 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_16gu5M44VM564LCC2XRN5lEi",
+          "id": "tok_16jUJy44VM564LCCFbiG2LNV",
           "livemode": false,
-          "created": 1441272768,
+          "created": 1441888714,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_16gu5M44VM564LCC4cg4T1TW",
+            "id": "card_16jUJy44VM564LCCDcNaTOHd",
             "object": "card",
             "last4": "0002",
             "brand": "Visa",
@@ -88,16 +88,16 @@ http_interactions:
             "dynamic_last4": null,
             "metadata": {}
           },
-          "client_ip": "82.39.238.248"
+          "client_ip": "31.37.179.205"
         }
     http_version: 
-  recorded_at: Thu, 03 Sep 2015 09:32:48 GMT
+  recorded_at: Thu, 10 Sep 2015 12:38:34 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/charges
     body:
       encoding: US-ASCII
-      string: amount=999&description=Myflix%20signup%20charge&currency=gbp&source=tok_16gu5M44VM564LCC2XRN5lEi
+      string: amount=999&description=Myflix%20signup%20charge&currency=gbp&source=tok_16jUJy44VM564LCCFbiG2LNV
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -111,8 +111,8 @@ http_interactions:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"1.25.0","lang":"ruby","lang_version":"2.1.7 p400 (2015-08-18)","platform":"x86_64-darwin13.0","engine":"ruby","publisher":"stripe","uname":"Darwin
-        Toms-MacBook-Air-2.local 13.4.0 Darwin Kernel Version 13.4.0: Sun Aug 17 19:50:11
-        PDT 2014; root:xnu-2422.115.4~1/RELEASE_X86_64 x86_64","hostname":"Toms-MacBook-Air-2.local"}'
+        toms-air-2 13.4.0 Darwin Kernel Version 13.4.0: Sun Aug 17 19:50:11 PDT 2014;
+        root:xnu-2422.115.4~1/RELEASE_X86_64 x86_64","hostname":"toms-air-2"}'
       Content-Length:
       - '96'
   response:
@@ -123,7 +123,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 03 Sep 2015 09:32:49 GMT
+      - Thu, 10 Sep 2015 12:38:35 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -141,7 +141,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_6ujYq7sBA8403B
+      - req_6xP8eWhL49aMvj
       Stripe-Version:
       - '2015-08-19'
     body:
@@ -152,9 +152,9 @@ http_interactions:
             "message": "Your card was declined.",
             "type": "card_error",
             "code": "card_declined",
-            "charge": "ch_16gu5N44VM564LCCtsBv1HvI"
+            "charge": "ch_16jUJz44VM564LCCragqHOxo"
           }
         }
     http_version: 
-  recorded_at: Thu, 03 Sep 2015 09:32:49 GMT
+  recorded_at: Thu, 10 Sep 2015 12:38:35 GMT
 recorded_with: VCR 2.9.3

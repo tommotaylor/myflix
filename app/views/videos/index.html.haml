@@ -6,4 +6,4 @@
       - category.recent_videos.each do |video|
         .video.col-sm-2
           = link_to video do
-            %img(src="#{video.small_cover}")
+            = image_tag video.small_cover
