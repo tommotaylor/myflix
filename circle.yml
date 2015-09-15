@@ -15,7 +15,7 @@ deployment:
   staging:
     branch: staging
     commands:
-      - heroku maintenance:on --app fast-wildwood-220
+      - heroku maintenance:on --app fast-wildwood-2202
       - git push git@heroku.com:fast-wildwood-220.git $CIRCLE_SHA1:refs/heads/master
-      - heroku run rake db:migrate --app fast-wildwood-220
-      - heroku maintenance:off --app fast-wildwood-220
+      - heroku run rake db:migrate --app fast-wildwood-2202
+      - heroku maintenance:off --app fast-wildwood-2202
