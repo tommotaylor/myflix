@@ -17,13 +17,11 @@ User.create!([
     },
   { name: "Lucie Watson",
     email: "lucie@lucie.com",
-    password: "password",
-    admin: false
+    password: "password"
     },
   { name: "Bob Dylan",
     email: "bob@bob.com",
-    password: "password",
-    admin: false }])
+    password: "password" }])
 
 Video.create!([
   { title: 'Birdman', 
