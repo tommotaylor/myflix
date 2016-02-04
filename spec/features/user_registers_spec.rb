@@ -23,7 +23,7 @@ feature 'User registers without invite', :js, :vcr do
     fill_in_user_info(email: "tom@tom.com")
     fill_in_credit_card_info(card_number: '122')
     click_button "Sign Up"
-    expect(page).to have_content("This card number looks invalid")
+    expect(page).to have_content("The card number is not a valid credit card number")
   end
 
   scenario 'with invalid user info but valid card info' do
@@ -37,7 +37,7 @@ feature 'User registers without invite', :js, :vcr do
     fill_in_user_info(email: "")
     fill_in_credit_card_info(card_number: '123')
     click_button "Sign Up"
-    expect(page).to have_content("This card number looks invalid")
+    expect(page).to have_content("The card number is not a valid credit card number")
   end
 
   def fill_in_user_info(options={})
