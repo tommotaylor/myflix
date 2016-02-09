@@ -28,4 +28,6 @@ Myflix::Application.configure do
     :authentication => :plain }
 end
 
+Elasticsearch::Model.client = Elasticsearch::Client.new host: ENV['SEARCHBOX_URL']
+
 Rails.application.routes.default_url_options[:host] = "https://master-myflix-tt.herokuapp.com"
