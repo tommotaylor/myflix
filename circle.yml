@@ -7,15 +7,15 @@ deployment:
   production:
     branch: master
     commands:
-      - heroku maintenance:on --app shrouded-woodland-3424
-      - heroku pg:backups capture --app shrouded-woodland-3424
-      - git push git@heroku.com:shrouded-woodland-3424.git $CIRCLE_SHA1:refs/heads/master
-      - heroku run rake db:migrate --app shrouded-woodland-3424
-      - heroku maintenance:off --app shrouded-woodland-3424
+      - heroku maintenance:on --app master-myflix-tt
+      - heroku pg:backups capture --app master-myflix-tt
+      - git push git@heroku.com:master-myflix-tt.git $CIRCLE_SHA1:refs/heads/master
+      - heroku run rake db:migrate --app master-myflix-tt
+      - heroku maintenance:off --app master-myflix-tt
   staging:
     branch: staging
     commands:
-      - heroku maintenance:on --app fast-wildwood-2202
-      - git push git@heroku.com:fast-wildwood-2202.git $CIRCLE_SHA1:refs/heads/master
-      - heroku run rake db:migrate --app fast-wildwood-2202
-      - heroku maintenance:off --app fast-wildwood-2202
+      - heroku maintenance:on --app staging-myflix-tt
+      - git push git@heroku.com:staging-myflix-tt.git $CIRCLE_SHA1:refs/heads/master
+      - heroku run rake db:migrate --app staging-myflix-tt
+      - heroku maintenance:off --app staging-myflix-tt
