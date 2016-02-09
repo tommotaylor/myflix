@@ -24,8 +24,8 @@ Myflix::Application.configure do
     :address        => ENV['MAILGUN_SMTP_SERVER'],
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => 'shrouded-woodland-3424.herokuapp.com',
+    :domain         => 'master-myflix-tt.herokuapp.com',
     :authentication => :plain }
 end
 
-Rails.application.routes.default_url_options[:host] = "https://shrouded-woodland-3424.herokuapp.com"
+Rails.application.routes.default_url_options[:host] = "https://master-myflix-tt.herokuapp.com"
