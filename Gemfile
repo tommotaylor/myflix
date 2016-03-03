@@ -38,6 +38,7 @@ group :development, :test do
   gem 'faker'
   gem 'capybara', :git => 'https://github.com/jnicklas/capybara.git'
   gem 'capybara-email'
+  gem 'simplecov', :require => false
 end
 
 group :test do

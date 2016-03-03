@@ -19,3 +19,6 @@
 
 # Ignore the Redis dump file
 /dump.rdb
+
+# Ignore test coverage output files
+/coverage
